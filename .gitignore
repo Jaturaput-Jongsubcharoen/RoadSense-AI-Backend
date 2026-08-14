@@ -2,6 +2,7 @@
 __pycache__/
 *.py[codz]
 *$py.class
+*.pyc
 
 # C extensions
 *.so
@@ -202,6 +203,12 @@ cython_debug/
 # .vscode/
 # Temporary file for partial code execution
 tempCodeRunnerFile.py
+
+# Runtime uploads and local model artifacts
+uploads/*
+models/*
+*.keras
+*.h5
 
 # Ruff stuff:
 .ruff_cache/
