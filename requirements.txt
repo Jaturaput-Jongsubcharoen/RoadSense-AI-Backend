@@ -1,0 +1,11 @@
+Flask
+flask-cors
+numpy
+Pillow
+requests
+python-dotenv
+tensorflow
+faiss-cpu
+sentence-transformers
+PyPDF2
+docx2txt
