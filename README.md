@@ -51,6 +51,27 @@ Returns a simple service check:
 {"status": "ok"}
 ```
 
+### `GET /api/examples/documents`
+
+Enumerates supported bundled RAG examples under `examples/documents`. Hidden files, metadata files, temporary files, and unsupported extensions are excluded. The response contains safe metadata only:
+
+```json
+{
+	"documents": [
+		{
+			"filename": "Transport-Canada-Road-Safety-2025.pdf",
+			"title": "Transport Canada Road Safety Report",
+			"extension": "pdf",
+			"size_bytes": 469867,
+			"suggested_questions": ["..."],
+			"url": "/api/examples/documents/Transport-Canada-Road-Safety-2025.pdf"
+		}
+	]
+}
+```
+
+`GET /api/examples/documents/<filename>` serves a selected document by safe basename for browser preview and frontend example upload. It rejects path traversal and unsupported files.
+
 ### `POST /api/predict`
 
 Accepts `multipart/form-data` with an image in the `image` field. The image is decoded, converted to RGB, resized to 224 x 224, preprocessed with the EfficientNet preprocessing function, and passed to the loaded TensorFlow model.
@@ -82,7 +103,7 @@ The message is sent to Ollama using the `llama3.1` model. The response is return
 
 ### `POST /api/rag/upload`
 
-Accepts `multipart/form-data` with a document in the `file` field. The implementation supports PDF, TXT, DOC, and DOCX extensions; the frontend currently offers PDF, TXT, and DOCX selection. The response reports the number of indexed chunks:
+Accepts `multipart/form-data` with a document in the `file` field. The implementation supports PDF, TXT, DOC, and DOCX extensions. The response reports the number of indexed chunks:
 
 ```json
 {"status": "ok", "chunks_loaded": 22}
@@ -124,6 +145,11 @@ The current index and document chunks are process memory. Restarting the Flask p
 
 ```text
 RoadSense-AI-Backend/
+├── examples/
+│   └── documents/
+│       ├── British-Columbia-Roads-Report-2018.pdf
+│       ├── Transport-Canada-Road-Safety-2025.pdf
+│       └── metadata.json
 ├── services/
 │   ├── __init__.py
 │   ├── model_service.py
@@ -136,7 +162,7 @@ RoadSense-AI-Backend/
 └── requirements.txt
 ```
 
-The `uploads/` directory is created automatically when the RAG service starts. The `models/` directory is intentionally not populated in this repository because the trained model is a large external artifact.
+The `uploads/` directory is created automatically when the RAG service starts. The `models/` directory contains the ignored local runtime copy of the trained model. The bundled PDFs are copies of documents previously uploaded in the original AsphaltAegis team project backend. The downloaded RoadSense-AI archive contains no documents, and the exact Ontario/Transport Canada filenames proposed during planning were not present in this workspace. Titles, provenance notes, and suggested questions are maintained in `examples/documents/metadata.json`; adding another supported document plus one metadata entry makes it appear automatically in the API response.
 
 ## Technology Stack
 
@@ -209,6 +235,7 @@ Copy `.env.example` to `.env` and adjust values if needed:
 ```text
 MODEL_PATH=models/efficientnet_best_model.keras
 OLLAMA_URL=http://localhost:11434/api/generate
+OLLAMA_MODEL=llama3.1
 ```
 
 The application loads `.env` through `python-dotenv` before importing services. Do not place credentials in `.env.example` or commit a real `.env` file.
@@ -243,16 +270,18 @@ The development server listens on port `5000`, and the health endpoint is availa
 
 The RAG service also loads `all-MiniLM-L6-v2` during import. If the embedding model is not already cached, Sentence Transformers downloads it from its model registry during first startup, so network access may be required. Ollama must be running separately for `/api/chat` and `/api/rag/ask` responses.
 
+RAG knowledge uploads accept only PDF, TXT, DOC, and DOCX files. Image files belong to `/api/predict` and are rejected by the RAG endpoint with HTTP 400.
+
 ## Frontend Integration
 
 The standalone `RoadSense-AI-Frontend` React application sends requests to this API. Its current source uses:
 
-- `http://127.0.0.1:5000/api/predict` for image prediction
-- `http://localhost:5000/api/chat` for normal chat
-- `http://localhost:5000/api/rag/upload` for document upload
-- `http://localhost:5000/api/rag/ask` for RAG questions
+- `${VITE_API_BASE_URL}/api/predict` for image prediction
+- `${VITE_API_BASE_URL}/api/chat` for normal chat
+- `${VITE_API_BASE_URL}/api/rag/upload` for document upload
+- `${VITE_API_BASE_URL}/api/rag/ask` for RAG questions
 
-Flask-CORS is enabled by the current application, allowing the Vite development frontend to call the backend during local development. The frontend currently hardcodes these local hosts, so deployed environments require coordinated frontend configuration changes.
+Flask-CORS is enabled by the current application, allowing the Vite development frontend to call the backend during local development. The frontend defaults to `http://localhost:5000` and can be configured with `VITE_API_BASE_URL`.
 
 ## Configuration and Runtime Data
 
@@ -262,6 +291,7 @@ Supported configuration variables in this separated backend are:
 | --- | --- | --- |
 | `MODEL_PATH` | `models/efficientnet_best_model.keras` | Location of the trained TensorFlow model |
 | `OLLAMA_URL` | `http://localhost:11434/api/generate` | Ollama text-generation endpoint |
+| `OLLAMA_MODEL` | `llama3.1` | Ollama model name used for chat and RAG answers |
 
 Uploaded RAG documents are written to `uploads/`, which is ignored by Git. The FAISS index and extracted chunks are in memory and are not persisted between process restarts.
 

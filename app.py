@@ -156,24 +156,130 @@
 #     app.run(debug=True)
 
 
-from flask import Flask, request, jsonify
+import os
+import json
+from pathlib import Path
+
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from dotenv import load_dotenv
+from werkzeug.utils import secure_filename
 
-load_dotenv()
+load_dotenv(Path(__file__).with_name(".env"))
 
 from services.model_service import predict_image
 from services.ollama_service import chat_with_ollama
 
 #newly added
-from services.rag_service import load_knowledge_from_file, chat_with_ollama_rag
+from services.rag_service import (
+    ALLOWED_DOCUMENT_EXTENSIONS,
+    load_knowledge_from_file,
+    chat_with_ollama_rag,
+)
 
 app = Flask(__name__)
 CORS(app)
+EXAMPLE_DOCUMENTS_DIR = Path(__file__).resolve().parent / "examples" / "documents"
+EXAMPLE_METADATA_PATH = EXAMPLE_DOCUMENTS_DIR / "metadata.json"
+EXAMPLE_IMAGES_DIR = Path(__file__).resolve().parent / "examples" / "images"
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
+IMAGE_CLASS_BY_FOLDER = {
+    "Broken-Road-Sign-Issues": "Broken Road Sign Issues",
+    "Damaged-Road-issues": "Damaged Road issues",
+    "Illegal-Parking-Issues": "Illegal Parking Issues",
+    "Littering-Garbage-on-Public-Places-Issues": "Littering Garbage on Public Places Issues",
+    "Mixed-Issues": "Mixed Issues",
+    "Pothole-Issues": "Pothole Issues",
+    "Vandalism-Issues": "Vandalism Issues",
+}
 
 @app.get("/api/health")
 def health():
     return {"status": "ok"}
+
+
+@app.get("/api/examples/documents")
+def example_documents():
+    """Return safe metadata for bundled RAG example documents."""
+    try:
+        metadata = json.loads(EXAMPLE_METADATA_PATH.read_text(encoding="utf-8"))
+    except (FileNotFoundError, json.JSONDecodeError):
+        metadata = {}
+
+    documents = []
+    for path in sorted(EXAMPLE_DOCUMENTS_DIR.iterdir() if EXAMPLE_DOCUMENTS_DIR.exists() else []):
+        if path.name.startswith(".") or not path.is_file():
+            continue
+        if path.suffix.lower() not in ALLOWED_DOCUMENT_EXTENSIONS:
+            continue
+
+        item = metadata.get(path.name, {})
+        documents.append({
+            "filename": path.name,
+            "title": item.get("title", path.stem.replace("-", " ")),
+            "description": item.get("description", "Bundled RoadSense AI reference document."),
+            "provenance": item.get("provenance", "Bundled RoadSense AI example."),
+            "suggested_questions": item.get("suggested_questions", []),
+            "extension": path.suffix.lower().lstrip("."),
+            "size_bytes": path.stat().st_size,
+            "url": f"/api/examples/documents/{path.name}",
+        })
+
+    return jsonify({"documents": documents})
+
+
+@app.get("/api/examples/images")
+def example_images():
+    """Return safe metadata for backend-owned road examples."""
+    images = []
+    if not EXAMPLE_IMAGES_DIR.exists():
+        return jsonify({"images": images})
+
+    for path in sorted(EXAMPLE_IMAGES_DIR.rglob("*")):
+        if not path.is_file() or path.name.startswith(".") or path.suffix.lower() not in IMAGE_EXTENSIONS:
+            continue
+        category = path.parent.name
+        expected_class = IMAGE_CLASS_BY_FOLDER.get(category)
+        if not expected_class:
+            continue
+        relative = path.relative_to(EXAMPLE_IMAGES_DIR).as_posix()
+        images.append({
+            "id": relative,
+            "filename": path.name,
+            "category": expected_class,
+            "group": path.parent.parent.name,
+            "url": f"/api/examples/images/{relative}",
+            "expectedClass": expected_class,
+            "size_bytes": path.stat().st_size,
+        })
+
+    return jsonify({"images": images})
+
+
+@app.get("/api/examples/images/<path:filename>")
+def serve_example_image(filename):
+    """Serve only a supported image stored beneath examples/images."""
+    requested = (EXAMPLE_IMAGES_DIR / filename).resolve()
+    root = EXAMPLE_IMAGES_DIR.resolve()
+    if root not in requested.parents or requested.suffix.lower() not in IMAGE_EXTENSIONS:
+        return jsonify({"error": "Invalid example image"}), 400
+    if not requested.is_file():
+        return jsonify({"error": "Example image not found"}), 404
+    return send_from_directory(requested.parent, requested.name, as_attachment=False)
+
+
+@app.get("/api/examples/documents/<path:filename>")
+def serve_example_document(filename):
+    """Serve one allowlisted bundled document without exposing filesystem paths."""
+    safe_name = secure_filename(filename)
+    if safe_name != filename or Path(filename).name != filename:
+        return jsonify({"error": "Invalid document name"}), 400
+
+    path = EXAMPLE_DOCUMENTS_DIR / safe_name
+    if not path.is_file() or path.suffix.lower() not in ALLOWED_DOCUMENT_EXTENSIONS:
+        return jsonify({"error": "Example document not found"}), 404
+
+    return send_from_directory(EXAMPLE_DOCUMENTS_DIR, safe_name, as_attachment=False)
 
 # ---------------- PREDICTION ----------------
 @app.post("/api/predict")
@@ -207,6 +313,12 @@ def rag_upload():
     file = request.files["file"]
     if not file.filename:
         return jsonify({"error": "File name is empty"}), 400
+
+    extension = os.path.splitext(file.filename)[1].lower()
+    if extension not in ALLOWED_DOCUMENT_EXTENSIONS:
+        return jsonify({
+            "error": "Unsupported document type. Use PDF, TXT, DOC, or DOCX."
+        }), 400
 
     result = load_knowledge_from_file(file)
     status = 200 if result.get("status") == "ok" else 400
