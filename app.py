@@ -175,6 +175,7 @@ from services.rag_service import (
     ALLOWED_DOCUMENT_EXTENSIONS,
     load_knowledge_from_file,
     chat_with_ollama_rag,
+    generate_suggested_questions,
 )
 
 app = Flask(__name__)
@@ -191,6 +192,10 @@ IMAGE_CLASS_BY_FOLDER = {
     "Mixed-Issues": "Mixed Issues",
     "Pothole-Issues": "Pothole Issues",
     "Vandalism-Issues": "Vandalism Issues",
+}
+IMAGE_GROUP_BY_FOLDER = {
+    "Road-Issues": "Road Issues",
+    "Public-Cleanliness-and-Environmental-Issues": "Public Cleanliness and Environmental Issues",
 }
 
 @app.get("/api/health")
@@ -247,7 +252,7 @@ def example_images():
             "id": relative,
             "filename": path.name,
             "category": expected_class,
-            "group": path.parent.parent.name,
+            "group": IMAGE_GROUP_BY_FOLDER.get(path.parent.parent.name, path.parent.parent.name),
             "url": f"/api/examples/images/{relative}",
             "expectedClass": expected_class,
             "size_bytes": path.stat().st_size,
@@ -335,6 +340,14 @@ def rag_ask():
 
     answer = chat_with_ollama_rag(question)
     return jsonify({"answer": answer})
+
+
+@app.post("/api/rag/questions")
+def rag_questions():
+    questions = generate_suggested_questions()
+    if not questions:
+        return jsonify({"questions": [], "message": "No questions generated. Ollama may be unavailable."}), 503
+    return jsonify({"questions": questions})
 
 
 if __name__ == "__main__":

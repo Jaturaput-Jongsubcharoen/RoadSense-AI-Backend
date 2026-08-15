@@ -121,6 +121,7 @@
 
 
 import os
+import json
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"   # avoid TF optimization loading
 os.environ["USE_TF"] = "0"                  # disable TF usage inside transformers
 os.environ["TRANSFORMERS_NO_TF"] = "1"      # block TF loading
@@ -271,3 +272,38 @@ If the context does not contain enough information, reply exactly:
     except Exception as e:
         print(f"Ollama RAG request failed: {e}")
         return "Local AI service is unavailable. Start Ollama and try again."
+
+
+def generate_suggested_questions() -> list[str]:
+    """Ask Ollama for document-grounded questions after indexing."""
+    if not DOCS:
+        return []
+
+    context = "\n\n".join(DOCS[:8])
+    prompt = f"""
+Create exactly 5 concise questions that a reader could answer from the document context below.
+Return ONLY a valid JSON array of question strings. Do not include markdown or commentary.
+
+DOCUMENT CONTEXT:
+{context}
+"""
+    payload = {
+        "model": OLLAMA_MODEL,
+        "prompt": prompt,
+        "stream": False,
+        "options": {"temperature": 0.7},
+    }
+
+    try:
+        response = requests.post(OLLAMA_URL, json=payload, timeout=120)
+        response.raise_for_status()
+        raw = response.json().get("response", "")
+        questions = json.loads(raw.strip().removeprefix("```json").removesuffix("```").strip())
+        if isinstance(questions, list):
+            cleaned_questions = [str(question).strip() for question in questions if str(question).strip()]
+            if len(cleaned_questions) >= 5:
+                return cleaned_questions[:5]
+    except Exception as error:
+        print(f"Ollama question generation failed: {error}")
+
+    return []

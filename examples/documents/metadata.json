@@ -5,7 +5,9 @@
     "suggested_questions": [
       "What source is identified on the report's first page?",
       "What road-safety topic does this document cover?",
-      "Summarize the main information available in this report."
+      "Summarize the main information available in this report.",
+      "What organization is associated with the road-safety material?",
+      "What follow-up question would help analyze this report further?"
     ],
     "provenance": "Original AsphaltAegisCOMP258Project backend upload; source line identifies Transport Canada - Road Safety, NCDB, August 12, 2025."
   },
@@ -15,7 +17,9 @@
     "suggested_questions": [
       "How many kilometres of roads are described in British Columbia?",
       "What percentage of the roads are unpaved?",
-      "What environmental effects of roads are described?"
+      "What environmental effects of roads are described?",
+      "What distinction does the report make between paved and unpaved roads?",
+      "Why are roadless areas important according to the report?"
     ],
     "provenance": "Original AsphaltAegisCOMP258Project backend upload; public report filename envreportbc_roads_May2018.pdf."
   }
