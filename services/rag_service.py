@@ -120,8 +120,9 @@
 
 
 
-import os
 import json
+import os
+from threading import Lock
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"   # avoid TF optimization loading
 os.environ["USE_TF"] = "0"                  # disable TF usage inside transformers
 os.environ["TRANSFORMERS_NO_TF"] = "1"      # block TF loading
@@ -138,10 +139,7 @@ from PyPDF2 import PdfReader
 import docx2txt
 import requests
 from werkzeug.utils import secure_filename
-
-# ---------------------- OLLAMA SERVER -----------------------
-OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434/api/generate")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1")
+from services.llm_config import OLLAMA_MODEL, OLLAMA_URL, ollama_headers
 
 # ---------------------- FILE STORAGE ------------------------
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "..", "uploads")
@@ -149,10 +147,21 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 ALLOWED_DOCUMENT_EXTENSIONS = {".pdf", ".txt", ".doc", ".docx"}
 
 # ---------------------- EMBEDDING MODEL ---------------------
-embedder = SentenceTransformer("all-MiniLM-L6-v2")
+embedder = None
+embedder_lock = Lock()
 
 DOCS = []      # list[str] containing text chunks
 INDEX = None   # faiss index
+
+
+def get_embedder():
+    """Load the embedding model only when RAG is first used."""
+    global embedder
+    if embedder is None:
+        with embedder_lock:
+            if embedder is None:
+                embedder = SentenceTransformer("all-MiniLM-L6-v2")
+    return embedder
 
 # ---------------------- FILE READING ------------------------
 def _extract_text_from_file(file_path: str) -> str:
@@ -212,7 +221,7 @@ def load_knowledge_from_file(file_storage) -> dict:
         return {"status": "error", "message": "No readable text found in file."}
 
     DOCS = chunks
-    vectors = embedder.encode(DOCS)
+    vectors = get_embedder().encode(DOCS)
 
     INDEX = faiss.IndexFlatL2(vectors.shape[1])
     INDEX.add(np.array(vectors))
@@ -225,7 +234,7 @@ def _retrieve_context(query: str, top_k: int = 5) -> str:
     if INDEX is None or not DOCS:
         return "No context uploaded yet."
 
-    q_vec = embedder.encode([query])
+    q_vec = get_embedder().encode([query])
     distances, indices = INDEX.search(np.array(q_vec), top_k)
     selected = [DOCS[i] for i in indices[0]]
     return "\n\n".join(selected)
@@ -265,7 +274,7 @@ If the context does not contain enough information, reply exactly:
     }
 
     try:
-        res = requests.post(OLLAMA_URL, json=payload, timeout=180)
+        res = requests.post(OLLAMA_URL, json=payload, headers=ollama_headers(), timeout=180)
         res.raise_for_status()
         data = res.json()
         return data.get("response", "No response from AI.")
@@ -295,7 +304,7 @@ DOCUMENT CONTEXT:
     }
 
     try:
-        response = requests.post(OLLAMA_URL, json=payload, timeout=120)
+        response = requests.post(OLLAMA_URL, json=payload, headers=ollama_headers(), timeout=120)
         response.raise_for_status()
         raw = response.json().get("response", "")
         questions = json.loads(raw.strip().removeprefix("```json").removesuffix("```").strip())

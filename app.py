@@ -180,7 +180,16 @@ from services.rag_service import (
 )
 
 app = Flask(__name__)
-CORS(app)
+
+
+def _cors_origins():
+    configured_origins = os.getenv("CORS_ORIGINS", "*").strip()
+    if not configured_origins or configured_origins == "*":
+        return "*"
+    return [origin.strip() for origin in configured_origins.split(",") if origin.strip()]
+
+
+CORS(app, origins=_cors_origins())
 EXAMPLE_DOCUMENTS_DIR = Path(__file__).resolve().parent / "examples" / "documents"
 EXAMPLE_METADATA_PATH = EXAMPLE_DOCUMENTS_DIR / "metadata.json"
 EXAMPLE_IMAGES_DIR = Path(__file__).resolve().parent / "examples" / "images"
@@ -385,7 +394,11 @@ def rag_questions():
 
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(
+        host=os.getenv("HOST", "0.0.0.0"),
+        port=int(os.getenv("PORT", "5000")),
+        debug=os.getenv("FLASK_DEBUG", "false").lower() == "true",
+    )
 
 
 

@@ -83,12 +83,8 @@
 #         return f"Error: {str(e)}"
 
 
-import os
-
 import requests
-
-OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434/api/generate")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1")
+from services.llm_config import OLLAMA_MODEL, OLLAMA_URL, ollama_headers
 
 def chat_with_ollama(message):
     payload = {
@@ -98,7 +94,7 @@ def chat_with_ollama(message):
     }
 
     try:
-        res = requests.post(OLLAMA_URL, json=payload, timeout=120)
+        res = requests.post(OLLAMA_URL, json=payload, headers=ollama_headers(), timeout=120)
         res.raise_for_status()
         data = res.json()
         return data.get("response", "No response.")
