@@ -302,6 +302,41 @@ The RAG service also loads `all-MiniLM-L6-v2` during import. If the embedding mo
 
 RAG knowledge uploads accept only PDF, TXT, DOC, and DOCX files. Image files belong to `/api/predict` and are rejected by the RAG endpoint with HTTP 400.
 
+## Render Deployment
+
+Deploy this repository as a Render Python web service. The included `render.yaml` uses:
+
+```text
+Build command: pip install -r requirements.txt
+Start command: gunicorn --workers 1 --bind 0.0.0.0:$PORT app:app
+```
+
+Gunicorn imports the Flask object named `app` from `app.py`. One worker is intentional because the service keeps the TensorFlow classifier and in-memory RAG state in process memory. Running multiple workers would load those heavyweight resources once per worker and create independent FAISS indexes.
+
+Set the following Render environment variables; do not commit real URLs or keys:
+
+| Variable | Render use |
+| --- | --- |
+| `CORS_ORIGINS` | Comma-separated deployed frontend origins, for example `https://<frontend>.onrender.com` |
+| `MODEL_PATH` | Local path where the model is available after startup; default is `models/efficientnet_best_model.keras` |
+| `MODEL_DOWNLOAD_URL` | Required on a fresh deployment when the ignored model artifact is not already present |
+| `MODEL_SHA256` | Optional SHA-256 verification value for the downloaded model |
+| `OLLAMA_URL` | Externally reachable Ollama-compatible `/api/generate` endpoint |
+| `OLLAMA_MODEL` | Model name accepted by that endpoint |
+| `OLLAMA_API_KEY` | Optional bearer token; sent only when configured |
+
+The backend first checks `MODEL_PATH`. If the file is absent, it downloads `MODEL_DOWNLOAD_URL` to a temporary file, optionally verifies `MODEL_SHA256`, and atomically places the verified file at `MODEL_PATH`. If neither a local model nor a download URL is available, startup fails clearly instead of using a placeholder model.
+
+For local development, leave `OLLAMA_URL` at `http://localhost:11434/api/generate` and run Ollama locally. For Render, `localhost` cannot reach your computer or a local Ollama process. Normal Chat, Agentic RAG answers, and generated questions require a separately hosted, reachable Ollama-compatible LLM endpoint. The backend can attach a bearer token to that endpoint, but it does not choose or provision a cloud provider.
+
+### Deployment Limitations
+
+- `uploads/` is temporary and may be lost when a Render instance restarts.
+- The FAISS index and document chunks are in memory; users must re-upload and re-index documents after a restart.
+- The Sentence Transformer embedding model downloads or initializes the first time RAG is used after a cold start.
+- TensorFlow, FAISS, and Sentence Transformers are memory-intensive. A constrained/free instance may cold-start slowly or lack sufficient memory for the complete image-classification plus RAG workload.
+- Free/tier-limited hosting and any external LLM provider are subject to current provider limits and pricing; no $0 cost is guaranteed.
+
 ## Frontend Integration
 
 The standalone `RoadSense-AI-Frontend` React application sends requests to this API. Its current source uses:

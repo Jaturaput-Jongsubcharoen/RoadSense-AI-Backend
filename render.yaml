@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: roadsense-ai-backend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --workers 1 --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - key: MODEL_DOWNLOAD_URL
+        sync: false
+      - key: MODEL_SHA256
+        sync: false
+      - key: OLLAMA_URL
+        sync: false
+      - key: OLLAMA_MODEL
+        value: llama3.1
+      - key: OLLAMA_API_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false

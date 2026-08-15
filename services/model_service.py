@@ -287,6 +287,7 @@ import io
 import os
 from pathlib import Path
 from tensorflow.keras.applications.efficientnet import preprocess_input
+from services.model_artifact import ensure_model_artifact
 
 DEFAULT_MODEL_PATH = Path(__file__).resolve().parents[1] / "models" / "efficientnet_best_model.keras"
 configured_model_path = Path(os.getenv("MODEL_PATH", str(DEFAULT_MODEL_PATH)))
@@ -295,6 +296,7 @@ MODEL_PATH = (
     if configured_model_path.is_absolute()
     else DEFAULT_MODEL_PATH.parents[1] / configured_model_path
 )
+ensure_model_artifact(MODEL_PATH)
 print("Loading ML model from:", MODEL_PATH)
 model = tf.keras.models.load_model(str(MODEL_PATH))
 
@@ -313,7 +315,7 @@ def predict_image(file):
     img_bytes = file.read()
     print("FILE RECEIVED SIZE:", len(img_bytes))
     tensor = preprocess(img_bytes)
-    preds = model.predict(tensor)
+    preds = model.predict(tensor, verbose=0)
     idx = np.argmax(preds)
     confidence = float(np.max(preds))
 
