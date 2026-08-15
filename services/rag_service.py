@@ -122,23 +122,18 @@
 
 import json
 import os
+from pathlib import Path
 from threading import Lock
+
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"   # avoid TF optimization loading
 os.environ["USE_TF"] = "0"                  # disable TF usage inside transformers
 os.environ["TRANSFORMERS_NO_TF"] = "1"      # block TF loading
 os.environ["TRANSFORMERS_NO_FLAX"] = "1"    # block JAX
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-import os
-from pathlib import Path
-
-import faiss
-import numpy as np
-from sentence_transformers import SentenceTransformer
-from PyPDF2 import PdfReader
-import docx2txt
 import requests
 from werkzeug.utils import secure_filename
+
 from services.llm_config import OLLAMA_MODEL, OLLAMA_URL, ollama_headers
 
 # ---------------------- FILE STORAGE ------------------------
@@ -160,23 +155,29 @@ def get_embedder():
     if embedder is None:
         with embedder_lock:
             if embedder is None:
+                from sentence_transformers import SentenceTransformer
+
                 embedder = SentenceTransformer("all-MiniLM-L6-v2")
     return embedder
 
 # ---------------------- FILE READING ------------------------
 def _extract_text_from_file(file_path: str) -> str:
-    """Read TXT / PDF / DOCX and return plain text."""
-    ext = file_path.split(".")[-1].lower()
+    """Read TXT / PDF / DOCX and return plain text only when a document is actually selected for RAG."""
+    ext = Path(file_path).suffix.lower().lstrip(".")
 
     if ext == "txt":
         with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
             return f.read()
 
     if ext == "pdf":
+        from PyPDF2 import PdfReader
+
         reader = PdfReader(file_path)
         return "\n".join(page.extract_text() or "" for page in reader.pages)
 
     if ext in ("doc", "docx"):
+        import docx2txt
+
         return docx2txt.process(file_path)
 
     return ""
@@ -221,6 +222,9 @@ def load_knowledge_from_file(file_storage) -> dict:
         return {"status": "error", "message": "No readable text found in file."}
 
     DOCS = chunks
+    import faiss
+    import numpy as np
+
     vectors = get_embedder().encode(DOCS)
 
     INDEX = faiss.IndexFlatL2(vectors.shape[1])
@@ -233,6 +237,8 @@ def _retrieve_context(query: str, top_k: int = 5) -> str:
     """Return top_k most relevant chunks."""
     if INDEX is None or not DOCS:
         return "No context uploaded yet."
+
+    import numpy as np
 
     q_vec = get_embedder().encode([query])
     distances, indices = INDEX.search(np.array(q_vec), top_k)
