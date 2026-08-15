@@ -158,6 +158,7 @@
 
 import os
 import json
+import random
 from pathlib import Path
 
 from flask import Flask, request, jsonify, send_from_directory
@@ -197,6 +198,75 @@ IMAGE_GROUP_BY_FOLDER = {
     "Road-Issues": "Road Issues",
     "Public-Cleanliness-and-Environmental-Issues": "Public Cleanliness and Environmental Issues",
 }
+_example_image_cache = {"signature": None, "items": []}
+_example_document_cache = {"signature": None, "items": []}
+
+
+def _directory_signature(directory, extensions):
+    if not directory.exists():
+        return ()
+    return tuple(sorted(
+        (str(path.relative_to(directory)), path.stat().st_size, path.stat().st_mtime_ns)
+        for path in directory.rglob("*")
+        if path.is_file() and path.suffix.lower() in extensions and not path.name.startswith(".")
+    ))
+
+
+def _discover_example_images():
+    signature = _directory_signature(EXAMPLE_IMAGES_DIR, IMAGE_EXTENSIONS)
+    if signature == _example_image_cache["signature"]:
+        return _example_image_cache["items"]
+
+    items = []
+    for relative_name, size_bytes, _ in signature:
+        path = EXAMPLE_IMAGES_DIR / relative_name
+        category_folder = path.parent.name
+        expected_class = IMAGE_CLASS_BY_FOLDER.get(category_folder)
+        if not expected_class:
+            continue
+        items.append({
+            "id": relative_name.replace("\\", "/"),
+            "filename": path.name,
+            "category": expected_class,
+            "group": IMAGE_GROUP_BY_FOLDER.get(path.parent.parent.name, path.parent.parent.name),
+            "url": f"/api/examples/images/{relative_name.replace(chr(92), '/')}",
+            "expectedClass": expected_class,
+            "size_bytes": size_bytes,
+        })
+
+    _example_image_cache.update(signature=signature, items=items)
+    return items
+
+
+def _discover_example_documents():
+    signature = _directory_signature(EXAMPLE_DOCUMENTS_DIR, ALLOWED_DOCUMENT_EXTENSIONS)
+    metadata_signature = EXAMPLE_METADATA_PATH.stat().st_mtime_ns if EXAMPLE_METADATA_PATH.exists() else None
+    cache_signature = (signature, metadata_signature)
+    if cache_signature == _example_document_cache["signature"]:
+        return _example_document_cache["items"]
+
+    try:
+        metadata = json.loads(EXAMPLE_METADATA_PATH.read_text(encoding="utf-8"))
+    except (FileNotFoundError, json.JSONDecodeError):
+        metadata = {}
+
+    documents = []
+    for filename, size_bytes, _ in signature:
+        path = EXAMPLE_DOCUMENTS_DIR / filename
+        item = metadata.get(path.name, {})
+        documents.append({
+            "filename": path.name,
+            "title": item.get("title", path.stem.replace("-", " ")),
+            "description": item.get("description", "Bundled RoadSense AI reference document."),
+            "provenance": item.get("provenance", "Bundled RoadSense AI example."),
+            "suggested_questions": item.get("suggested_questions", []),
+            "extension": path.suffix.lower().lstrip("."),
+            "size_bytes": size_bytes,
+            "url": f"/api/examples/documents/{path.name}",
+        })
+
+    _example_document_cache.update(signature=cache_signature, items=documents)
+    return documents
 
 @app.get("/api/health")
 def health():
@@ -206,59 +276,19 @@ def health():
 @app.get("/api/examples/documents")
 def example_documents():
     """Return safe metadata for bundled RAG example documents."""
-    try:
-        metadata = json.loads(EXAMPLE_METADATA_PATH.read_text(encoding="utf-8"))
-    except (FileNotFoundError, json.JSONDecodeError):
-        metadata = {}
-
-    documents = []
-    for path in sorted(EXAMPLE_DOCUMENTS_DIR.iterdir() if EXAMPLE_DOCUMENTS_DIR.exists() else []):
-        if path.name.startswith(".") or not path.is_file():
-            continue
-        if path.suffix.lower() not in ALLOWED_DOCUMENT_EXTENSIONS:
-            continue
-
-        item = metadata.get(path.name, {})
-        documents.append({
-            "filename": path.name,
-            "title": item.get("title", path.stem.replace("-", " ")),
-            "description": item.get("description", "Bundled RoadSense AI reference document."),
-            "provenance": item.get("provenance", "Bundled RoadSense AI example."),
-            "suggested_questions": item.get("suggested_questions", []),
-            "extension": path.suffix.lower().lstrip("."),
-            "size_bytes": path.stat().st_size,
-            "url": f"/api/examples/documents/{path.name}",
-        })
-
-    return jsonify({"documents": documents})
+    return jsonify({"documents": _discover_example_documents()})
 
 
 @app.get("/api/examples/images")
 def example_images():
     """Return safe metadata for backend-owned road examples."""
-    images = []
-    if not EXAMPLE_IMAGES_DIR.exists():
-        return jsonify({"images": images})
-
-    for path in sorted(EXAMPLE_IMAGES_DIR.rglob("*")):
-        if not path.is_file() or path.name.startswith(".") or path.suffix.lower() not in IMAGE_EXTENSIONS:
-            continue
-        category = path.parent.name
-        expected_class = IMAGE_CLASS_BY_FOLDER.get(category)
-        if not expected_class:
-            continue
-        relative = path.relative_to(EXAMPLE_IMAGES_DIR).as_posix()
-        images.append({
-            "id": relative,
-            "filename": path.name,
-            "category": expected_class,
-            "group": IMAGE_GROUP_BY_FOLDER.get(path.parent.parent.name, path.parent.parent.name),
-            "url": f"/api/examples/images/{relative}",
-            "expectedClass": expected_class,
-            "size_bytes": path.stat().st_size,
-        })
-
-    return jsonify({"images": images})
+    grouped = {}
+    for image in _discover_example_images():
+        grouped.setdefault(image["expectedClass"], []).append(image)
+    selected = []
+    for category in IMAGE_CLASS_BY_FOLDER.values():
+        selected.extend(random.sample(grouped.get(category, []), min(2, len(grouped.get(category, [])))))
+    return jsonify({"images": selected})
 
 
 @app.get("/api/examples/images/<path:filename>")
@@ -270,7 +300,9 @@ def serve_example_image(filename):
         return jsonify({"error": "Invalid example image"}), 400
     if not requested.is_file():
         return jsonify({"error": "Example image not found"}), 404
-    return send_from_directory(requested.parent, requested.name, as_attachment=False)
+    response = send_from_directory(requested.parent, requested.name, as_attachment=False, max_age=86400)
+    response.cache_control.public = True
+    return response
 
 
 @app.get("/api/examples/documents/<path:filename>")
@@ -284,7 +316,9 @@ def serve_example_document(filename):
     if not path.is_file() or path.suffix.lower() not in ALLOWED_DOCUMENT_EXTENSIONS:
         return jsonify({"error": "Example document not found"}), 404
 
-    return send_from_directory(EXAMPLE_DOCUMENTS_DIR, safe_name, as_attachment=False)
+    response = send_from_directory(EXAMPLE_DOCUMENTS_DIR, safe_name, as_attachment=False, max_age=86400)
+    response.cache_control.public = True
+    return response
 
 # ---------------- PREDICTION ----------------
 @app.post("/api/predict")

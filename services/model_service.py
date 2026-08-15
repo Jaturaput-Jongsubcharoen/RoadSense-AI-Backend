@@ -323,8 +323,8 @@ def predict_image(file):
     }
 
 print("Loaded model from:", MODEL_PATH)
-print("Model summary:")
-model.summary()
+model.predict(np.zeros((1, 224, 224, 3), dtype=np.float32), verbose=0)
+print("Model warm-up complete")
 
 
 
