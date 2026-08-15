@@ -125,6 +125,16 @@ The service retrieves the top five indexed chunks and asks Ollama to answer usin
 {"answer": "..."}
 ```
 
+### `POST /api/rag/questions`
+
+After a document is indexed, this endpoint asks the configured Ollama model to generate exactly five concise questions grounded in the indexed document chunks. It returns:
+
+```json
+{"questions": ["What does the document say about road safety?"]}
+```
+
+If Ollama is unavailable or no document has been indexed, the endpoint returns HTTP 503 and the frontend falls back to document metadata questions when available.
+
 ## RAG Pipeline
 
 The implemented RAG flow is:
@@ -146,6 +156,16 @@ The current index and document chunks are process memory. Restarting the Flask p
 ```text
 RoadSense-AI-Backend/
 ├── examples/
+│   ├── images/
+│   │   ├── Public-Cleanliness-and-Environmental-Issues/
+│   │   │   ├── Littering-Garbage-on-Public-Places-Issues/
+│   │   │   └── Vandalism-Issues/
+│   │   └── Road-Issues/
+│   │       ├── Broken-Road-Sign-Issues/
+│   │       ├── Damaged-Road-issues/
+│   │       ├── Illegal-Parking-Issues/
+│   │       ├── Mixed-Issues/
+│   │       └── Pothole-Issues/
 │   └── documents/
 │       ├── British-Columbia-Roads-Report-2018.pdf
 │       ├── Transport-Canada-Road-Safety-2025.pdf
@@ -163,6 +183,8 @@ RoadSense-AI-Backend/
 ```
 
 The `uploads/` directory is created automatically when the RAG service starts. The `models/` directory contains the ignored local runtime copy of the trained model. The bundled PDFs are copies of documents previously uploaded in the original AsphaltAegis team project backend. The downloaded RoadSense-AI archive contains no documents, and the exact Ontario/Transport Canada filenames proposed during planning were not present in this workspace. Titles, provenance notes, and suggested questions are maintained in `examples/documents/metadata.json`; adding another supported document plus one metadata entry makes it appear automatically in the API response.
+
+Bundled road images are owned by this backend under `examples/images`. `GET /api/examples/images` recursively discovers supported JPG, JPEG, PNG, and WebP files and maps the verified folder names to the seven model classes. `GET /api/examples/images/<relative-name>` serves an image only when the resolved path remains inside `examples/images`. Add a valid image under an existing category folder and refresh the frontend to include it automatically; no React card changes are required. Runtime uploads remain separate under `uploads/` and are never included in example discovery.
 
 ## Technology Stack
 
