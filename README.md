@@ -72,6 +72,12 @@ Enumerates supported bundled RAG examples under `examples/documents`. Hidden fil
 
 `GET /api/examples/documents/<filename>` serves a selected document by safe basename for browser preview and frontend example upload. It rejects path traversal and unsupported files.
 
+### `GET /api/examples/images`
+
+Discovers backend-owned image metadata once per file-signature change, then randomly selects up to two different images for each verified model class. The response normally contains 14 images: two each for Broken Road Sign Issues, Damaged Road issues, Illegal Parking Issues, Littering Garbage on Public Places Issues, Mixed Issues, Pothole Issues, and Vandalism Issues. The frontend filters this already-selected response locally; changing a category does not refetch or reshuffle it.
+
+The image serving route is `GET /api/examples/images/<relative-name>`. It validates that the resolved path remains under `examples/images`, returns one static image, and sends browser cache headers for one day. Example metadata does not load images, run TensorFlow, or perform RAG processing.
+
 ### `POST /api/predict`
 
 Accepts `multipart/form-data` with an image in the `image` field. The image is decoded, converted to RGB, resized to 224 x 224, preprocessed with the EfficientNet preprocessing function, and passed to the loaded TensorFlow model.
@@ -279,6 +285,8 @@ models/efficientnet_best_model.keras
 Alternatively, set `MODEL_PATH` to the ML repository model or another existing model file. The model is required even for health-check startup because it is loaded when the Flask application imports its prediction service. Training datasets and notebooks are not required for inference.
 
 The current backend checkout includes an ignored local copy under `models/` so it can run independently. Keep that copy synchronized with the ML repository model, or point `MODEL_PATH` directly to the ML-owned artifact to avoid maintaining two model versions.
+
+The TensorFlow model is loaded once during backend import and receives one warm-up inference using its verified `(1, 224, 224, 3)` input shape. Prediction requests reuse that in-memory model and only decode, preprocess, and predict the submitted image.
 
 ## Starting the Flask Server
 
