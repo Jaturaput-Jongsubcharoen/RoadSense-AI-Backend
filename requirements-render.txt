@@ -1,0 +1,14 @@
+# Render Linux CPU-only deployment dependencies
+# PyTorch is installed separately from the official CPU wheel index.
+Flask==3.0.3
+gunicorn==23.0.0
+flask-cors==4.0.1
+numpy==1.26.4
+Pillow==10.4.0
+requests==2.32.3
+python-dotenv==1.0.1
+tensorflow-cpu==2.16.2
+faiss-cpu==1.8.0
+sentence-transformers==3.0.1
+PyPDF2==3.0.1
+docx2txt==0.8

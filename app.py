@@ -168,7 +168,6 @@ from werkzeug.utils import secure_filename
 
 load_dotenv(Path(__file__).with_name(".env"))
 
-from services.model_service import predict_image
 from services.ollama_service import chat_with_ollama
 
 #newly added
@@ -335,6 +334,8 @@ def predict():
     file = request.files.get("image")
     if not file:
         return jsonify({"error": "No image uploaded"}), 400
+
+    from services.model_service import predict_image
 
     result = predict_image(file)
     return jsonify(result)

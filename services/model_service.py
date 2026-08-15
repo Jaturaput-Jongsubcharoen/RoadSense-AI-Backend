@@ -280,13 +280,14 @@
 #         return {"error": f"Prediction failed: {str(e)}"}
 
 
-import tensorflow as tf
-import numpy as np
-from PIL import Image
 import io
 import os
 from pathlib import Path
-from tensorflow.keras.applications.efficientnet import preprocess_input
+from threading import Lock
+
+import numpy as np
+from PIL import Image
+
 from services.model_artifact import ensure_model_artifact
 
 DEFAULT_MODEL_PATH = Path(__file__).resolve().parents[1] / "models" / "efficientnet_best_model.keras"
@@ -296,26 +297,44 @@ MODEL_PATH = (
     if configured_model_path.is_absolute()
     else DEFAULT_MODEL_PATH.parents[1] / configured_model_path
 )
-ensure_model_artifact(MODEL_PATH)
-print("Loading ML model from:", MODEL_PATH)
-model = tf.keras.models.load_model(str(MODEL_PATH))
 
-CLASS_NAMES  = ["Broken Road Sign Issues", "Damaged Road issues", "Illegal Parking Issues", "Littering Garbage on Public Places Issues", "Mixed Issues", "Pothole Issues", "Vandalism Issues"]
+CLASS_NAMES = ["Broken Road Sign Issues", "Damaged Road issues", "Illegal Parking Issues", "Littering Garbage on Public Places Issues", "Mixed Issues", "Pothole Issues", "Vandalism Issues"]
+
+model = None
+model_lock = Lock()
+
+
+def _load_model():
+    global model
+    if model is None:
+        with model_lock:
+            if model is None:
+                ensure_model_artifact(MODEL_PATH)
+                import tensorflow as tf
+
+                print("Loading ML model from:", MODEL_PATH)
+                model = tf.keras.models.load_model(str(MODEL_PATH))
+                print("ML model loaded")
+    return model
+
 
 def preprocess(image_bytes):
+    from tensorflow.keras.applications.efficientnet import preprocess_input
+
     img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
     img = img.resize((224, 224))
     arr = np.array(img).astype(np.float32)
-    arr = preprocess_input(arr)  # <-- IMPORTANT
+    arr = preprocess_input(arr)
     arr = np.expand_dims(arr, axis=0)
     return arr
+
 
 def predict_image(file):
     file.seek(0)
     img_bytes = file.read()
-    print("FILE RECEIVED SIZE:", len(img_bytes))
     tensor = preprocess(img_bytes)
-    preds = model.predict(tensor, verbose=0)
+    loaded_model = _load_model()
+    preds = loaded_model.predict(tensor, verbose=0)
     idx = np.argmax(preds)
     confidence = float(np.max(preds))
 
@@ -323,10 +342,6 @@ def predict_image(file):
         "class_name": CLASS_NAMES[idx],
         "confidence": confidence
     }
-
-print("Loaded model from:", MODEL_PATH)
-model.predict(np.zeros((1, 224, 224, 3), dtype=np.float32), verbose=0)
-print("Model warm-up complete")
 
 
 

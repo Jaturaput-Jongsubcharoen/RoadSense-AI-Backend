@@ -256,6 +256,13 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
+For Render Linux CPU-only deployment, install CPU-only PyTorch first and then the Render-specific requirements:
+
+```bash
+python -m pip install torch==2.2.2 --index-url https://download.pytorch.org/whl/cpu
+python -m pip install -r requirements-render.txt
+```
+
 ### Configure the backend
 
 Copy `.env.example` to `.env` and adjust values if needed:
