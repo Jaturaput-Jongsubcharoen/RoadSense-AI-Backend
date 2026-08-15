@@ -289,7 +289,12 @@ from pathlib import Path
 from tensorflow.keras.applications.efficientnet import preprocess_input
 
 DEFAULT_MODEL_PATH = Path(__file__).resolve().parents[1] / "models" / "efficientnet_best_model.keras"
-MODEL_PATH = Path(os.getenv("MODEL_PATH", str(DEFAULT_MODEL_PATH)))
+configured_model_path = Path(os.getenv("MODEL_PATH", str(DEFAULT_MODEL_PATH)))
+MODEL_PATH = (
+    configured_model_path
+    if configured_model_path.is_absolute()
+    else DEFAULT_MODEL_PATH.parents[1] / configured_model_path
+)
 print("Loading ML model from:", MODEL_PATH)
 model = tf.keras.models.load_model(str(MODEL_PATH))
 
@@ -317,8 +322,8 @@ def predict_image(file):
         "confidence": confidence
     }
 
-print("🔍 Loaded model from:", MODEL_PATH)
-print("🔍 Model summary:")
+print("Loaded model from:", MODEL_PATH)
+print("Model summary:")
 model.summary()
 
 

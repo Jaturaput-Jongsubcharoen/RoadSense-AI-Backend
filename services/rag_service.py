@@ -127,19 +127,25 @@ os.environ["TRANSFORMERS_NO_TF"] = "1"      # block TF loading
 os.environ["TRANSFORMERS_NO_FLAX"] = "1"    # block JAX
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
+import os
+from pathlib import Path
+
 import faiss
 import numpy as np
 from sentence_transformers import SentenceTransformer
 from PyPDF2 import PdfReader
 import docx2txt
 import requests
+from werkzeug.utils import secure_filename
 
 # ---------------------- OLLAMA SERVER -----------------------
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434/api/generate")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1")
 
 # ---------------------- FILE STORAGE ------------------------
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "..", "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+ALLOWED_DOCUMENT_EXTENSIONS = {".pdf", ".txt", ".doc", ".docx"}
 
 # ---------------------- EMBEDDING MODEL ---------------------
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
@@ -185,7 +191,14 @@ def load_knowledge_from_file(file_storage) -> dict:
     """Save uploaded file, extract chunks, build FAISS index."""
     global DOCS, INDEX
 
-    filename = file_storage.filename
+    filename = secure_filename(file_storage.filename or "")
+    extension = Path(filename).suffix.lower()
+    if not filename or extension not in ALLOWED_DOCUMENT_EXTENSIONS:
+        return {
+            "status": "error",
+            "message": "Unsupported document type. Use PDF, TXT, DOC, or DOCX.",
+        }
+
     save_path = os.path.join(UPLOAD_DIR, filename)
     file_storage.save(save_path)
 
@@ -244,7 +257,7 @@ If the context does not contain enough information, reply exactly:
 """
 
     payload = {
-        "model": "llama3.1",
+        "model": OLLAMA_MODEL,
         "prompt": prompt,
         "stream": False,
         "options": {"temperature": 0.1}
@@ -252,7 +265,9 @@ If the context does not contain enough information, reply exactly:
 
     try:
         res = requests.post(OLLAMA_URL, json=payload, timeout=180)
+        res.raise_for_status()
         data = res.json()
         return data.get("response", "No response from AI.")
     except Exception as e:
-        return f"Ollama / RAG error: {str(e)}"
+        print(f"Ollama RAG request failed: {e}")
+        return "Local AI service is unavailable. Start Ollama and try again."

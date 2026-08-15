@@ -88,17 +88,20 @@ import os
 import requests
 
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434/api/generate")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1")
 
 def chat_with_ollama(message):
     payload = {
-        "model": "llama3.1",
+        "model": OLLAMA_MODEL,
         "prompt": message,
         "stream": False
     }
 
     try:
-        res = requests.post(OLLAMA_URL, json=payload)
+        res = requests.post(OLLAMA_URL, json=payload, timeout=120)
+        res.raise_for_status()
         data = res.json()
         return data.get("response", "No response.")
     except Exception as e:
-        return f"🔥 Ollama error: {str(e)}"
+        print(f"Ollama request failed: {e}")
+        return "Local AI service is unavailable. Start Ollama and try again."

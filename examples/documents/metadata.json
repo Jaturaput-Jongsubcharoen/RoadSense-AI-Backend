@@ -1,0 +1,22 @@
+{
+  "Transport-Canada-Road-Safety-2025.pdf": {
+    "title": "Transport Canada Road Safety Report",
+    "description": "A source PDF uploaded in the original team project and identified in its first page as Transport Canada road-safety material.",
+    "suggested_questions": [
+      "What source is identified on the report's first page?",
+      "What road-safety topic does this document cover?",
+      "Summarize the main information available in this report."
+    ],
+    "provenance": "Original AsphaltAegisCOMP258Project backend upload; source line identifies Transport Canada - Road Safety, NCDB, August 12, 2025."
+  },
+  "British-Columbia-Roads-Report-2018.pdf": {
+    "title": "Roads and Roadless Areas in British Columbia",
+    "description": "A British Columbia roads and roadless-areas indicator report covering road distribution, paved and unpaved roads, and environmental effects.",
+    "suggested_questions": [
+      "How many kilometres of roads are described in British Columbia?",
+      "What percentage of the roads are unpaved?",
+      "What environmental effects of roads are described?"
+    ],
+    "provenance": "Original AsphaltAegisCOMP258Project backend upload; public report filename envreportbc_roads_May2018.pdf."
+  }
+}
