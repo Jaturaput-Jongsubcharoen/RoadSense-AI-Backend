@@ -107,6 +107,21 @@ The message is sent to Ollama using the `llama3.1` model. The response is return
 {"response": "..."}
 ```
 
+Ollama calls write one JSON-formatted log event with a request ID, timestamp,
+model, success/failure status, latency, token counts, and error category. Prompt
+and answer text are not included. Ollama token counts are used when present;
+missing counts are estimated by whitespace-separated words and labeled as
+estimates. Retry count and delay are configurable with `OLLAMA_MAX_RETRIES`
+(default 1, capped at 3) and `OLLAMA_RETRY_DELAY_SECONDS` (default 0.5, capped at
+5 seconds). Only timeouts, connection errors, and selected temporary HTTP status
+codes are retried. Existing request timeouts and API response JSON remain
+unchanged.
+
+Set `OLLAMA_COST_PER_1000_TOKENS` only when a verified provider rate applies.
+When it is blank, token-cost estimates are reported as unavailable; local Ollama
+has no per-token provider charge, though self-hosting still uses compute and
+electricity. This estimate does not include infrastructure costs.
+
 ### `POST /api/rag/upload`
 
 Accepts `multipart/form-data` with a document in the `file` field. The implementation supports PDF, TXT, DOC, and DOCX extensions. The response reports the number of indexed chunks:
@@ -364,8 +379,23 @@ Supported configuration variables in this separated backend are:
 | `MODEL_PATH` | `models/efficientnet_best_model.keras` | Location of the trained TensorFlow model |
 | `OLLAMA_URL` | `http://localhost:11434/api/generate` | Ollama text-generation endpoint |
 | `OLLAMA_MODEL` | `llama3.1` | Ollama model name used for chat and RAG answers |
+| `OLLAMA_MAX_RETRIES` | `1` | Retries after temporary failures (capped at 3) |
+| `OLLAMA_RETRY_DELAY_SECONDS` | `0.5` | Delay between retries (capped at 5 seconds) |
+| `OLLAMA_COST_PER_1000_TOKENS` | unset | Optional verified provider rate; unset means cost is unavailable |
+| `MAX_CONTENT_LENGTH` | `33554432` | Maximum request size in bytes (32 MiB by default) |
 
-Uploaded RAG documents are written to `uploads/`, which is ignored by Git. The FAISS index and extracted chunks are in memory and are not persisted between process restarts.
+Uploaded RAG documents are written to `uploads/`, which is ignored by Git.
+The active document name is recorded in an ignored marker; after a process
+restart, the document is re-read and its FAISS index is rebuilt on the next RAG
+question. This supports one active document on one instance; it is not shared
+storage for multiple instances.
+
+## Container and AWS preparation
+
+The local Dockerfile, Compose files, Amplify build configuration, AWS cost
+estimate, security notes, and deployment/rollback steps are in
+[`deployment/aws/README.md`](./deployment/aws/README.md). AWS deployment is
+separate from Render and is not provisioned by this repository setup.
 
 ## Attribution
 

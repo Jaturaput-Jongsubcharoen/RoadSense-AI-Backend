@@ -1,0 +1,402 @@
+[
+  {
+    "question_id": "bc-road-length",
+    "reference_answer": "B.C. has approximately 719,000 kilometres of roads, including all paved roads and unpaved roads and trails that allow motorized vehicle use.",
+    "retrieved_context": "is the best available single source of road data for the Province of B.C. The B.C. Government is working toward updating and integrating all resource roads into this this single comprehensive database. Explore the B.C. Digital Road Atlas to learn more about roads in B.C. 1 Roads in B.C. •British Columbia has approximately 719,000 kilometres of roads, when including all road types that allow motorized vehicle use. •Unpaved roads—which include all seasonal, loose and rough surfaced roads—contribute the most (92%) to the total length of roads in B.C. 57,100 km 662,000 km UnpavedPaved 0 200,000 400,000 600,000 800,000 Total Length (km) 2 Roadless Areas in B.C. •Sixty-six percent—or 62,600,000 hectares—of British Columbia’s landbase is roadless, deﬁned as more than 500 metres from a road. 31,600,000\n\nLand & Forests Roads & Roadless Areas in BriƟsh Columbia While roads serve the interests of the public, First Nations, and industries, they are also one of the most widespread forms of landscape change1. Roads can threaten biological diversity and ecosystem health through habitat loss and fragmentation, expanding development, spread of invasive species and increasing human-wildlife interactions— for example animal mortality from collisions with vehicles1. This indicator reports on the amount and distribution of roads and roadless areas in British Columbia. •British Columbia has approximately 719,000 kilometres of roads. Roads include all paved roads and all unpaved roads and trails that allow motorized vehicle use. •Unpaved roads make up 92 percent of the roads in British Columbia. B.C. has\n\nColumbia (accessed on May 1st, 2018). All paved roads and unpaved roads and trails that allow motorized vehicle use—as detailed in the Digital Road Atlas Data Dictionary —were included in the analysis. Some road features available in the Digital Road Atlas were excluded, including non-roads (ferry routes, proposed roads, pedestrian only roads, non-motorized trails and water access routes) and non-active roads (decommissioned and overgrown roads). The indicator presents a coarse-scale snapshot of the amount and distribution of roads in British Columbia— data completeness, data quality, road condition or intensity of road use were not evaluated. Roadless areas were determined by applying a 500 metre buﬀer on either side of all roads. A 500 metre buﬀer is a conservative value for determining\n\na long history of natural resource use resulting in this large gravel road network2. •Two thirds of British Columbia’s landbase is roadless. The amount and distribution of roadless area— areas further than 500 metres from a road—varies considerably across British Columbia. Large areas that are not inﬂuenced by roads or other landscape disturbances provide beneﬁts and opportunities for British Columbia and British Columbians. These large, roadless—or intact—areas provide conservation beneﬁts, for example providing habitat for species such as grizzly bear , maintaining ecosystem services, such as water avail- ability and ﬂood control, and supporting adaptation to climate change. They also provide economic, recreational and wilderness opportunities. B.C. Digital Road Atlas The Digital Road Atlas\n\nha 62,600,000 ha Not RoadedRoaded 0 20 40 60 % Area 3 Roadless Areas within B.C.’s Ecoregions •The amount and distribution of roadless areas vary considerably across B.C. Twenty seven of the 43 ter- restrial ecoregions in B.C. are more than 50 percent roadless, while 6 ecoregions have less that 25 percent roadless area. •As expected, ecoregions with high population densities , and hence larger road networks, have the lowest amounts of remaining roadless area. For example, the Lower Mainland, Georgia-Puget Basin and Okanagan Highland ecoregions each have 13 percent roadless area (see the Appendix for individual ecoregion results). 20 30 40 50 60 70 80 90% Roadless Area 4 Methods This indicator is based on the B.C. Digital Road Atlas the best available single source of road data for British",
+    "retrieved_chunk_ids": [
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0002",
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0000",
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0004",
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0001",
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0003"
+    ],
+    "baseline": {
+      "answer": "British Columbia has approximately 719,000 kilometres of roads, including all paved roads and all unpaved roads and trails that allow motorized vehicle use.",
+      "retrieved_chunk_ids": [
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0002",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0000",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0004",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0001",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0003"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    },
+    "candidate": {
+      "answer": "According to the text, British Columbia has approximately 719,000 kilometres of roads, and this includes all road types that allow motorized vehicle use, such as paved roads and unpaved roads and trails.",
+      "retrieved_chunk_ids": [
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0002",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0000",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0004",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0001",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0003"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    }
+  },
+  {
+    "question_id": "bc-unpaved-share",
+    "reference_answer": "Unpaved roads contribute 92 percent of total road length and include seasonal, loose and rough surfaced roads.",
+    "retrieved_context": "Columbia (accessed on May 1st, 2018). All paved roads and unpaved roads and trails that allow motorized vehicle use—as detailed in the Digital Road Atlas Data Dictionary —were included in the analysis. Some road features available in the Digital Road Atlas were excluded, including non-roads (ferry routes, proposed roads, pedestrian only roads, non-motorized trails and water access routes) and non-active roads (decommissioned and overgrown roads). The indicator presents a coarse-scale snapshot of the amount and distribution of roads in British Columbia— data completeness, data quality, road condition or intensity of road use were not evaluated. Roadless areas were determined by applying a 500 metre buﬀer on either side of all roads. A 500 metre buﬀer is a conservative value for determining\n\nLand & Forests Roads & Roadless Areas in BriƟsh Columbia While roads serve the interests of the public, First Nations, and industries, they are also one of the most widespread forms of landscape change1. Roads can threaten biological diversity and ecosystem health through habitat loss and fragmentation, expanding development, spread of invasive species and increasing human-wildlife interactions— for example animal mortality from collisions with vehicles1. This indicator reports on the amount and distribution of roads and roadless areas in British Columbia. •British Columbia has approximately 719,000 kilometres of roads. Roads include all paved roads and all unpaved roads and trails that allow motorized vehicle use. •Unpaved roads make up 92 percent of the roads in British Columbia. B.C. has\n\nis the best available single source of road data for the Province of B.C. The B.C. Government is working toward updating and integrating all resource roads into this this single comprehensive database. Explore the B.C. Digital Road Atlas to learn more about roads in B.C. 1 Roads in B.C. •British Columbia has approximately 719,000 kilometres of roads, when including all road types that allow motorized vehicle use. •Unpaved roads—which include all seasonal, loose and rough surfaced roads—contribute the most (92%) to the total length of roads in B.C. 57,100 km 662,000 km UnpavedPaved 0 200,000 400,000 600,000 800,000 Total Length (km) 2 Roadless Areas in B.C. •Sixty-six percent—or 62,600,000 hectares—of British Columbia’s landbase is roadless, deﬁned as more than 500 metres from a road. 31,600,000\n\nBoard. 2015. Access Management and Resource Roads: 2015 Update. FPB/SR/49. •3Lee, P.G., M. Hanneman, J.D. Gysbers, R. Cheng and W. Smith. 2010. Atlas of Canada’s Intact Forest Landscapes. Edmonton, Alberta: Global Forest Watch Canada 10th Anniversary Publication #1. 74 pp. •4British Columbia. Ministry of Environment. 2007. Environmental Trends in British Columbia: 2007. Min- istry of Environment, State of Environment Reporting. Data *By accessing these datasets, you agree to the licence associated with each ﬁle, as indicated in parentheses below. •Indicator Summary Data: Amount of Roaded & Roadless Area by Ecoregion in B.C. (Licence: Open Gov- ernment Licence - British Columbia ) •Digital Road Atlas (DRA) - Master Partially-AĴributed Roads (Licence: B.C. Crown Copyright ) •Ecoregions - Ecoregion\n\na long history of natural resource use resulting in this large gravel road network2. •Two thirds of British Columbia’s landbase is roadless. The amount and distribution of roadless area— areas further than 500 metres from a road—varies considerably across British Columbia. Large areas that are not inﬂuenced by roads or other landscape disturbances provide beneﬁts and opportunities for British Columbia and British Columbians. These large, roadless—or intact—areas provide conservation beneﬁts, for example providing habitat for species such as grizzly bear , maintaining ecosystem services, such as water avail- ability and ﬂood control, and supporting adaptation to climate change. They also provide economic, recreational and wilderness opportunities. B.C. Digital Road Atlas The Digital Road Atlas",
+    "retrieved_chunk_ids": [
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0004",
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0000",
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0002",
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0006",
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0001"
+    ],
+    "baseline": {
+      "answer": "Unpaved roads make up 92 percent of the roads in British Columbia. Unpaved roads include all seasonal, loose and rough surfaced roads.",
+      "retrieved_chunk_ids": [
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0004",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0000",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0002",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0006",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0001"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    },
+    "candidate": {
+      "answer": "According to the report, 92% of the roads in British Columbia are unpaved. Unpaved roads include all seasonal, loose and rough surfaced roads.",
+      "retrieved_chunk_ids": [
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0004",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0000",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0002",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0006",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0001"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    }
+  },
+  {
+    "question_id": "bc-roadless-definition",
+    "reference_answer": "Roadless land is more than 500 metres from a road. Sixty-six percent of B.C.'s landbase, or 62,600,000 hectares, is roadless.",
+    "retrieved_context": "is the best available single source of road data for the Province of B.C. The B.C. Government is working toward updating and integrating all resource roads into this this single comprehensive database. Explore the B.C. Digital Road Atlas to learn more about roads in B.C. 1 Roads in B.C. •British Columbia has approximately 719,000 kilometres of roads, when including all road types that allow motorized vehicle use. •Unpaved roads—which include all seasonal, loose and rough surfaced roads—contribute the most (92%) to the total length of roads in B.C. 57,100 km 662,000 km UnpavedPaved 0 200,000 400,000 600,000 800,000 Total Length (km) 2 Roadless Areas in B.C. •Sixty-six percent—or 62,600,000 hectares—of British Columbia’s landbase is roadless, deﬁned as more than 500 metres from a road. 31,600,000\n\nha 62,600,000 ha Not RoadedRoaded 0 20 40 60 % Area 3 Roadless Areas within B.C.’s Ecoregions •The amount and distribution of roadless areas vary considerably across B.C. Twenty seven of the 43 ter- restrial ecoregions in B.C. are more than 50 percent roadless, while 6 ecoregions have less that 25 percent roadless area. •As expected, ecoregions with high population densities , and hence larger road networks, have the lowest amounts of remaining roadless area. For example, the Lower Mainland, Georgia-Puget Basin and Okanagan Highland ecoregions each have 13 percent roadless area (see the Appendix for individual ecoregion results). 20 30 40 50 60 70 80 90% Roadless Area 4 Methods This indicator is based on the B.C. Digital Road Atlas the best available single source of road data for British\n\na long history of natural resource use resulting in this large gravel road network2. •Two thirds of British Columbia’s landbase is roadless. The amount and distribution of roadless area— areas further than 500 metres from a road—varies considerably across British Columbia. Large areas that are not inﬂuenced by roads or other landscape disturbances provide beneﬁts and opportunities for British Columbia and British Columbians. These large, roadless—or intact—areas provide conservation beneﬁts, for example providing habitat for species such as grizzly bear , maintaining ecosystem services, such as water avail- ability and ﬂood control, and supporting adaptation to climate change. They also provide economic, recreational and wilderness opportunities. B.C. Digital Road Atlas The Digital Road Atlas\n\nLand & Forests Roads & Roadless Areas in BriƟsh Columbia While roads serve the interests of the public, First Nations, and industries, they are also one of the most widespread forms of landscape change1. Roads can threaten biological diversity and ecosystem health through habitat loss and fragmentation, expanding development, spread of invasive species and increasing human-wildlife interactions— for example animal mortality from collisions with vehicles1. This indicator reports on the amount and distribution of roads and roadless areas in British Columbia. •British Columbia has approximately 719,000 kilometres of roads. Roads include all paved roads and all unpaved roads and trails that allow motorized vehicle use. •Unpaved roads make up 92 percent of the roads in British Columbia. B.C. has\n\nColumbia (accessed on May 1st, 2018). All paved roads and unpaved roads and trails that allow motorized vehicle use—as detailed in the Digital Road Atlas Data Dictionary —were included in the analysis. Some road features available in the Digital Road Atlas were excluded, including non-roads (ferry routes, proposed roads, pedestrian only roads, non-motorized trails and water access routes) and non-active roads (decommissioned and overgrown roads). The indicator presents a coarse-scale snapshot of the amount and distribution of roads in British Columbia— data completeness, data quality, road condition or intensity of road use were not evaluated. Roadless areas were determined by applying a 500 metre buﬀer on either side of all roads. A 500 metre buﬀer is a conservative value for determining",
+    "retrieved_chunk_ids": [
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0002",
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0003",
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0001",
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0000",
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0004"
+    ],
+    "baseline": {
+      "answer": "Roadless land is defined as areas more than 500 metres from a road. Sixty-six percent (66%) of British Columbia's landbase, or 62,600,000 hectares, is roadless.",
+      "retrieved_chunk_ids": [
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0002",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0003",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0001",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0000",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0004"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    },
+    "candidate": {
+      "answer": "According to the report, roadless land is defined as areas more than 500 metres from a road. The report states that 66% of British Columbia's landbase is roadless, which is equivalent to 62,600,000 hectares.",
+      "retrieved_chunk_ids": [
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0002",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0003",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0001",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0000",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0004"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    }
+  },
+  {
+    "question_id": "ontario-fatalities-change",
+    "reference_answer": "Ontario recorded 561 fatalities in 2021 and 623 in 2022, an increase of 11.1 per cent.",
+    "retrieved_context": "There were 623 fatalities and 1,703 serious injuries on Ontario’s roads in 2022. 4 Ontario Road Safety Annual Report 2022Foreword The number of serious injuries on Ontario’s roads was 1,573, an 8 per cent decrease from 2018. The number of serious injuries has decreased by 39 per cent over the past decade. Fatality Rate For more than two decades, Ontario has measured road safety by calculating the number of collision-related fatalities for every 10,000 licensed drivers. Road Safety Rankings in 2022 North America Northwest Territories 0.38 Ontario 0.56 Yukon 0.58 District of Columbia 0.63 Quebec 0.66 Rhode Island 0.68 British Columbia 0.79 Alberta 0.81 Manitoba 0.81 Massachusetts 0.89 Motor vehicle deaths per 10,000 licensed drivers International Iceland 2.2 Norway 2.6 Denmark 2.8 Sweden 2.8\n\nper cent. Large Trucks The number of fatalities involving large trucks was 107 in 2022, unchanged from 2021. Pedestrians The number of pedestrians fatally injured in motor vehicle collisions was 106 in 2022, down from 121 in 2021 — a decrease of 12 per cent. Drugs and Driving The number of fatalities attributed to drugs other than alcohol decreased to 85 in 2022, down from 86 in 2021. Inattentive Driving The number of people killed in collisions involving an inattentive driver was 92 in 2022, up from 83 in 2021 — an 11 per cent increase. Inattentive driving was a factor in 15 per cent of all fatalities on Ontario roads in 2022. Motorcyclists and Cyclists Fatalities among motorcycle riders increased to 88 in 2022, up 16 per cent from the 76 fatalities recorded in 2021. The 5 Ontario Road Safety\n\nIreland 3.2 United Kingdom 3.4 Ontario 3.5 Switzerland 3.6 Finland 3.8 Germany 3.9 Motory vehicle deaths per billion vehicles travelled Road Safety in Ontario: 2021 vs. 2022 In 2022, the number of fatalities on Ontario’s roads increased by 11.1 per cent from 2021, a year when traffic patterns were still disrupted by the COVID-19 pandemic. Category 2021 2022 Number of Fatalities 561 623 Fatality Rate per 10,000 Licensed Drivers 0.52 0.56 Drinking and Driving Ontario recorded 137 drinking and driving fatalities in 2022, up from 96 in 2021 — an increase of 43 per cent. The province’s drinking and driving fatality rate was 0.12 per 10,000 licensed drivers. Speeding/Street Racing In 2022, the 115 people in Ontario were killed in speed-related collisions, down from 129 in 2021 — a decrease of 11\n\n60 40 20 025,000 20,00015,00010,000 5,000 0 Fatalities Injuries 1. Overview 13 Ontario Road Safety Annual Report 2022This section provides a synopsis of key road safety statistics such as the total number of traffic fatalities, injuries, collisions, licensed drivers, and registered vehicles. The primary measure of road user safety in Ontario is the number of fatalities for every 10,000 licensed drivers. In 2022, Ontario’s fatality rate of 0.56 per 10,000 licensed drivers continues to position Ontario as a road safety leader in Canada and in North America. The information on hospitalizations and other statistics in this section is a stark reminder of the human and economic cost of motor vehicle collisions, both in terms of lives lost, pain and suffering, and the impact on Ontario’s healthcare\n\nLicensed Drivers, 2003–2022 Between 2003 and 2022, the number of licensed drivers increased by 31 per cent. In contrast, the number of fatalities decreased by 25 per cent over this 20-year period. 7 Ontario Road Safety Annual Report 2022Foreword Number and Rate of Major and Minor Injuries, 2003–2022 In 2022, 36,740 people were injured (including major, minor and minimal injuries) in motor vehicle crashes, 41,148 fe wer than in 2003. Fatality and Injury Trends for Different Age Groups Major and Minor Injuries (‘000) 0510152025303540 0204060 Minor Injuries Major Injuries Major and Minor Injury RateYear2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022 Major and Minor Injury Rate per 10,000 Licensed Drivers2003 2004 2005 2006 2007 2008 2009 2010",
+    "retrieved_chunk_ids": [
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0016",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0018",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0017",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0032",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0021"
+    ],
+    "baseline": {
+      "answer": "According to the report, there were 561 fatalities in 2021 and 623 fatalities in 2022, which is an 11.1 per cent increase.",
+      "retrieved_chunk_ids": [
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0016",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0018",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0017",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0032",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0021"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    },
+    "candidate": {
+      "answer": "According to the report, in 2021, there were 561 fatalities, and in 2022, there were 623 fatalities. This represents an 11.1 per cent increase from 2021 to 2022.",
+      "retrieved_chunk_ids": [
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0016",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0018",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0017",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0032",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0021"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    }
+  },
+  {
+    "question_id": "ontario-fatality-rate",
+    "reference_answer": "The 2022 fatality rate was 0.56 fatalities per 10,000 licensed drivers.",
+    "retrieved_context": "Ireland 3.2 United Kingdom 3.4 Ontario 3.5 Switzerland 3.6 Finland 3.8 Germany 3.9 Motory vehicle deaths per billion vehicles travelled Road Safety in Ontario: 2021 vs. 2022 In 2022, the number of fatalities on Ontario’s roads increased by 11.1 per cent from 2021, a year when traffic patterns were still disrupted by the COVID-19 pandemic. Category 2021 2022 Number of Fatalities 561 623 Fatality Rate per 10,000 Licensed Drivers 0.52 0.56 Drinking and Driving Ontario recorded 137 drinking and driving fatalities in 2022, up from 96 in 2021 — an increase of 43 per cent. The province’s drinking and driving fatality rate was 0.12 per 10,000 licensed drivers. Speeding/Street Racing In 2022, the 115 people in Ontario were killed in speed-related collisions, down from 129 in 2021 — a decrease of 11\n\n60 40 20 025,000 20,00015,00010,000 5,000 0 Fatalities Injuries 1. Overview 13 Ontario Road Safety Annual Report 2022This section provides a synopsis of key road safety statistics such as the total number of traffic fatalities, injuries, collisions, licensed drivers, and registered vehicles. The primary measure of road user safety in Ontario is the number of fatalities for every 10,000 licensed drivers. In 2022, Ontario’s fatality rate of 0.56 per 10,000 licensed drivers continues to position Ontario as a road safety leader in Canada and in North America. The information on hospitalizations and other statistics in this section is a stark reminder of the human and economic cost of motor vehicle collisions, both in terms of lives lost, pain and suffering, and the impact on Ontario’s healthcare\n\nLicensed Drivers, 2003–2022 Between 2003 and 2022, the number of licensed drivers increased by 31 per cent. In contrast, the number of fatalities decreased by 25 per cent over this 20-year period. 7 Ontario Road Safety Annual Report 2022Foreword Number and Rate of Major and Minor Injuries, 2003–2022 In 2022, 36,740 people were injured (including major, minor and minimal injuries) in motor vehicle crashes, 41,148 fe wer than in 2003. Fatality and Injury Trends for Different Age Groups Major and Minor Injuries (‘000) 0510152025303540 0204060 Minor Injuries Major Injuries Major and Minor Injury RateYear2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022 Major and Minor Injury Rate per 10,000 Licensed Drivers2003 2004 2005 2006 2007 2008 2009 2010\n\nper cent. Large Trucks The number of fatalities involving large trucks was 107 in 2022, unchanged from 2021. Pedestrians The number of pedestrians fatally injured in motor vehicle collisions was 106 in 2022, down from 121 in 2021 — a decrease of 12 per cent. Drugs and Driving The number of fatalities attributed to drugs other than alcohol decreased to 85 in 2022, down from 86 in 2021. Inattentive Driving The number of people killed in collisions involving an inattentive driver was 92 in 2022, up from 83 in 2021 — an 11 per cent increase. Inattentive driving was a factor in 15 per cent of all fatalities on Ontario roads in 2022. Motorcyclists and Cyclists Fatalities among motorcycle riders increased to 88 in 2022, up 16 per cent from the 76 fatalities recorded in 2021. The 5 Ontario Road Safety\n\natalities Percentage of T otal Fatalities* Drinking and Driving 137 22% Speed-Related 115 18% Large Trucks 107 17% Pedestrians 106 17% Inattentive Driving 92 15% Motorcyclists 88 14% Drug-Impaired 85 14% Unbelted Occupants 78 13% Cyclists 24 4% Senior Drivers 22 4% Young Drivers 16 3% * Many fatal crashes involve more than one of the factors lis ted. These percentages do not add up to 100. 6 Ontario Road Safety Annual Report 2022Foreword Key Road Safety Statistical Trends 25% decrease in fatalities since 200331% increase in licensed drivers since 2003 Fatalities Licensed Drivers (millions)900 800 700 600 500 400 300 200 100 0 Year Fatalities Licensed Drivers12 10864202003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022 Number of Fatalities and",
+    "retrieved_chunk_ids": [
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0017",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0032",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0021",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0018",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0020"
+    ],
+    "baseline": {
+      "answer": "Ontario's 2022 fatality rate per 10,000 licensed drivers was 0.56.",
+      "retrieved_chunk_ids": [
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0017",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0032",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0021",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0018",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0020"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    },
+    "candidate": {
+      "answer": "0.56 per 10,000 licensed drivers.",
+      "retrieved_chunk_ids": [
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0017",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0032",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0021",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0018",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0020"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    }
+  },
+  {
+    "question_id": "ontario-inattentive-driving",
+    "reference_answer": "In 2022, 92 people were killed in collisions involving an inattentive driver; inattentive driving was a factor in 15 per cent of all fatalities on Ontario roads.",
+    "retrieved_context": "per cent. Large Trucks The number of fatalities involving large trucks was 107 in 2022, unchanged from 2021. Pedestrians The number of pedestrians fatally injured in motor vehicle collisions was 106 in 2022, down from 121 in 2021 — a decrease of 12 per cent. Drugs and Driving The number of fatalities attributed to drugs other than alcohol decreased to 85 in 2022, down from 86 in 2021. Inattentive Driving The number of people killed in collisions involving an inattentive driver was 92 in 2022, up from 83 in 2021 — an 11 per cent increase. Inattentive driving was a factor in 15 per cent of all fatalities on Ontario roads in 2022. Motorcyclists and Cyclists Fatalities among motorcycle riders increased to 88 in 2022, up 16 per cent from the 76 fatalities recorded in 2021. The 5 Ontario Road Safety\n\nin 2022. During the same time period, the number of licensed drivers increased by 287,578, from 10,877,259 in 2021 to 11,164,837 in 2022. Out of 962 drivers involved in a fatal collision, 137 were drinking drivers, 85 drivers’ ability was impaired by drugs, 92 drivers were coded as inattentive, and 115 were speeding (e.g. above speed limit or driving too fast for conditions). Despite about 96 per cent of Ontario drivers using seat belts, 78 vehicle occupants who were fatally injured were not using seat belts at the time of the collision. FIGURE 2 Persons Involved in Fatal and Injury Collisions by Severity of Injury, 2022 None, 41.2% Minimal, 25.5% Minor , 29.6% Major, 2.7% Fatal, 1.0% 2. The People 18 Ontario Road Safety Annual Report 2022The People 2A People in Collisions TABLE 2.1: Category\n\nInjuriesYear2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022Pedestrian Fatalities 22% decrease in serious injuries since 2003 Pedestrian Serious Injuries12% decrease in fatalities since 2003 Year2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022140 120 100 80 60 40 20 0600 500 400 300 200 100 0 Fatalities Serious Injuries The number of fatalities in collisions involving an inattentive driver increased from 75 in 2003 to 92 in 2022; this represents an increase of 23 per cent. During the same time period, the number of injuries in collisions involving an inattentive driver decreased from 14,545 in 2003 to 10,722 in 2022, a decrease of 26 per cent. Inattentive Driving * * An inattentive driver\n\nsystem, which affects everyone in Ontario. FIGURE 1 Total Number of Fatal and Injury Collisions in Ontario, 2003-20221. Overview YearNumber of Fatal and Injury Collisions 0100002000030000400005000060000 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 202260,000 50,000 40,000 30,000 20,000 10,000 0 14 Ontario Road Safety Annual Report 2022Overview 1A Synopsis Selected Statistics: 2022 Total Reportable Collisions 197,135 Total Drivers Involved in Collisions 354,903 Total Vehicles Involved in Collisions 367,165 Fatal Collisions 553 Personal Injury Collisions 26,967 Property-Damage Collisions 169,615 Persons Killed 623 Drivers Killed (excludes All-Terrain Vehicle and Snow Vehicle Drivers) 387 Drivers Killed (Impaired or Had Been Drinking) 89 Drivers\n\n60 40 20 025,000 20,00015,00010,000 5,000 0 Fatalities Injuries 1. Overview 13 Ontario Road Safety Annual Report 2022This section provides a synopsis of key road safety statistics such as the total number of traffic fatalities, injuries, collisions, licensed drivers, and registered vehicles. The primary measure of road user safety in Ontario is the number of fatalities for every 10,000 licensed drivers. In 2022, Ontario’s fatality rate of 0.56 per 10,000 licensed drivers continues to position Ontario as a road safety leader in Canada and in North America. The information on hospitalizations and other statistics in this section is a stark reminder of the human and economic cost of motor vehicle collisions, both in terms of lives lost, pain and suffering, and the impact on Ontario’s healthcare",
+    "retrieved_chunk_ids": [
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0018",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0038",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0030",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0033",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0032"
+    ],
+    "baseline": {
+      "answer": "According to the context, in 2022, the number of people killed in collisions involving an inattentive driver was 92. Inattentive driving was a factor in 15% of all fatalities on Ontario roads in 2022.",
+      "retrieved_chunk_ids": [
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0018",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0038",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0030",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0033",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0032"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    },
+    "candidate": {
+      "answer": "According to the text, in 2022, the number of people killed in collisions involving an inattentive driver was 92. Inattentive driving was a factor in 15% of all fatalities on Ontario roads in 2022.",
+      "retrieved_chunk_ids": [
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0018",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0038",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0030",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0033",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0032"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    }
+  },
+  {
+    "question_id": "canada-strategy-slogan",
+    "reference_answer": "The vision is 'Towards Zero—The safest roads in the world' and the slogan is 'Rethink Road Safety'.",
+    "retrieved_context": "web form: www.tc.gc.ca/eng/crown-copyright-request-614.htmlOr contact TCcopyright-droitdauteurTC@tc.gc.ca ROAD SAFETY IN CANADA If you are a road user, this booklet is for you. It will help you be a safer driver, rider, and pedestrian. HOW? It explains the greatest risks and suggests solutions. OUR VISION: Toward Zero Fatalities and having the safest roads in the world. 2 THIS BOOKLET CELEBRATES THREE MAJOR ROAD SAFETY EVENTS IN 2020 1. THE MIDPOINT OF CANADA’S ROAD SAFETY STRATEGY 2025 The vision of Road Safety Strategy 2025 is Towards Zero-The safest roads in the world and its slogan is Rethink Road Safety. You can find the Strategy 2025 at: http://roadsafetystrategy.ca/en/ Road Safety Strategy 2025 is Canada’s fourth national road safety program. The first three contributed to the reduction\n\nROAD SAFETY IN CANADA Improving Your Safety © His Majesty the King in Right of Canada, as represented by the Minister of Transport, 2023. Cette publication est aussi disponible en français sous le titre Sécurité routière au Canada – Améliorer votre sécurité . PDF Cat. No. T46-65/2023E-PDF ISBN 978-0-660-47437-3Permission to reproduceTransport Canada grants permission to copy and/or reproduce the contents of this publication for personal and public non-commercial use. Users must reproduce the materials accurately, identify Transport Canada as the source and not present theirs as an official version, or as having been produced with the help or the endorsement of Transport Canada. To request permission to reproduce materials from this publication for commercial purposes, please complete the following\n\n2 To learn more, about the UN Decade of Action for Road Safety, go to: https://www.who.int/teams/social-determinants-of-health/safety-and-mobility/decade-of-action-for-road-safety-2021-2030 3. 50TH ANNIVERSARY OF ROAD SAFETY AT TRANSPORT CANADA Transport Canada has worked and continues to work with its provincial and territorial partners as well as those in the manufacturing and non -governmental sectors to improve the safety of road travel in Canada. Between 2011 and 2020, fatalities have dropped by 14% and serious injuries by 28%.3 2 International Traffic Safety Data and Analysis Group (IRTAD) of the International Transport Forum (ITF) (2020). 2020 Road Safety Annual Report. 3 Transport Canada (2022). Road Safety in Canada 2020. 4 OCCUPANT PROTECTION In 2017, 97% of front seat occupants\n\nonline. ORSAR allows the government, public health and safety organizations, road safety advocates and the broader transportation sector to assess the impact of legislative changes and enforcement on driver behaviour. This report will support future decision-making to ensure Ontarians continue to get where they need to go safely. Each year, the Ontario government works with the province’s police services, public health and safety organizations, the insurance industry and the commercial transportation sector to make our roads safer. In 2022, Ontario introduced several road safety measures, including: • New lighting requirements for Ontario school buses to make it clearer when a bus is about to stop to pick up or drop off students. • A new legal framework to allow photo evidence of vehicles\n\nroad safety and injury prevention organizations, transportation associations, research institutions, police services and other ministries and governments. At the end of 2022, there were more than 11 million licensed drivers in Ontario. Additionally, millions of visitors from jurisdictions around the world travel on Ontario’s roads every year for work and leisure. Although Ontario’s roads have consistently ranked among the safest in North America, one person is killed on the province’s roads every 14 hours. By continuing to work with road safety partners and monitoring trends captured in ORSAR, Ontario will develop new and innovative road safety strategies to save lives and keep the province's roads among the safest in the world. Key Findings for Ontario in 2022 Fatalities and Serious Injuries",
+    "retrieved_chunk_ids": [
+      "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0001",
+      "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0000",
+      "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0004",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0011",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0015"
+    ],
+    "baseline": {
+      "answer": "The vision of Road Safety Strategy 2025 is \"Towards Zero - The safest roads in the world\" and its slogan is \"Rethink Road Safety\".",
+      "retrieved_chunk_ids": [
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0001",
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0000",
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0004",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0011",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0015"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    },
+    "candidate": {
+      "answer": "The vision of Road Safety Strategy 2025 is \"Towards Zero - The safest roads in the world\" and its slogan is \"Rethink Road Safety\".",
+      "retrieved_chunk_ids": [
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0001",
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0000",
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0004",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0011",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0015"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    }
+  },
+  {
+    "question_id": "canada-occupant-protection",
+    "reference_answer": "Sit at least 25 cm (10 in) away from the air bag, and seat infants and children under 13 in the back seat.",
+    "retrieved_context": "were wearing seat belts but, in 2020, 35% of fatally injured occupants were unbelted.4 DRIVERS AND PASSENGERS hAlways wear your seat belt hSit at least 25 cm (10 in) away from the air bag hAdjust head restraints so that the top is even with the top of your ears CHILDREN hSit infants and children under 13 in the back seat hUse approved child car seats/booster seats that have not expired. An approved child car seat in Canada will have a National Safety Mark hNever use child car seats/booster seats that have been recalled hReplace child car seats/booster seats that have been involved in collisions hInstall child car seats/booster seats properly hFasten child in the car seat/booster seat properly hNever leave a child in a hot vehicle as they could die in minutes: Dangers of Hot Cars and Children\n\n4 Transport Canada (2022). Road Safety in Canada 2020. 5 DID YOU KNOW? Adults: Wearing seat belts correctly can reduce the chances of death in a collision by 47% and serious injury by 52%.5 Children: Proper use of child car seats appropriate for height and weight can reduce the chances of death in a collision by 71% and injury by 67%.6 To learn more about child restraints, please go to: https://www.tc.gc.ca/en/services/road/child-car-seat-safety/choosing-child-car-seat-booster-seat.html 5 Statistics taken from Stewart, D.E., Ar ora, H.R. and Dalmotas, D. (1997). Estimation Methodologies for assessing Effectiveness of Seat Belt Restraint Systems and the National Occupant Restraint Program. Transport Canada, Ottawa, Canada, Publication No. TP 13110E. 6 Isaksson-Hellman I, L. Jakobsson, C. Gustafsson,\n\nCombined use of seat belt with airbag deployment is unknown. TABLE 2.10: Seat Belt Usage by Severity of Passenger * Injury in Fatal and Personal Injury Collisions, 2022 * Includes hangers on and excludes passengers in parked vehicles. Safety Equipment Used Severity of Injury Fatal Major Minor Minimal Not Injured Total Seat Belt Used 43 168 3,303 3,138 5,895 12,547 Child Safety Seat Used Incorrectly 0 2 7 10 26 45 Child Safety Seat Used Correctly 0 8 132 206 743 1,089 Other Equipment ** 25 29 416 298 548 1,316 Equipment Not Used 24 33 140 44 20 261 No Safety Equipment 0 1 169 127 247 544 Use Unknown 16 11 138 133 173 471 Total 108 252 4,305 3,956 7,652 16,273 ** Other equipment includes use of airbags. Combined use of seat belt with airbag deployment is unknown. 26 Ontario Road Safety Annual\n\nCanada (2022). Road Safety in Canada 2020. 14 Council of Ministers Responsible for Transportation and Highway Safety . Safety Measures for Cyclists and Pedestrians around Heavy Vehicles: Summary Report, pp. 22. 10 POORLY EQUIPPED VEHICLES hChoose/drive a vehicle with: –a high safety rating –front and side air bags –good visibility and limited blind spots –lane departure warnings –automatic emergency braking (AEB) hPut four matching snow tires on your vehicle in the winter hCheck your tire pressure every month hTake your vehicle to your dealer as soon as possible if you receive a recall notice from the manufacturer To learn more about safety technology in vehicles, please visit: https://www.tc.gc.ca/en/services/road/driver- assistance-technologies.html 11 YOUNG DRIVERS Too many young drivers\n\nin Canada website https://www.tc.gc.ca/en/services/road.html and learn about: • road collision statistics • safer vehicle technologies • car seat safety • driver distraction MAKE EVERY YEAR A SAFE YEAR ON THE ROAD: hWear your seatbelt hDon’t drink and drive hDon’t drive after using drugs hObey the rules of the road hFocus on your driving and avoid distractions hDon’t speed hDon’t text and drive CONTACT US BY CALLING: 1-800-333-0371",
+    "retrieved_chunk_ids": [
+      "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0005",
+      "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0006",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0051",
+      "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0014",
+      "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0021"
+    ],
+    "baseline": {
+      "answer": "Sit at least 25 cm (10 in) away from the air bag.",
+      "retrieved_chunk_ids": [
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0005",
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0006",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0051",
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0014",
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0021"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    },
+    "candidate": {
+      "answer": "The Canadian safety booklet recommends that children sit at least 25 cm (10 in) away from the air bag.",
+      "retrieved_chunk_ids": [
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0005",
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0006",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0051",
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0014",
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0021"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    }
+  },
+  {
+    "question_id": "canada-seat-belt-benefits",
+    "reference_answer": "Correctly worn adult seat belts can reduce the chances of death in a collision by 47% and serious injury by 52%.",
+    "retrieved_context": "4 Transport Canada (2022). Road Safety in Canada 2020. 5 DID YOU KNOW? Adults: Wearing seat belts correctly can reduce the chances of death in a collision by 47% and serious injury by 52%.5 Children: Proper use of child car seats appropriate for height and weight can reduce the chances of death in a collision by 71% and injury by 67%.6 To learn more about child restraints, please go to: https://www.tc.gc.ca/en/services/road/child-car-seat-safety/choosing-child-car-seat-booster-seat.html 5 Statistics taken from Stewart, D.E., Ar ora, H.R. and Dalmotas, D. (1997). Estimation Methodologies for assessing Effectiveness of Seat Belt Restraint Systems and the National Occupant Restraint Program. Transport Canada, Ottawa, Canada, Publication No. TP 13110E. 6 Isaksson-Hellman I, L. Jakobsson, C. Gustafsson,\n\nin 2022. During the same time period, the number of licensed drivers increased by 287,578, from 10,877,259 in 2021 to 11,164,837 in 2022. Out of 962 drivers involved in a fatal collision, 137 were drinking drivers, 85 drivers’ ability was impaired by drugs, 92 drivers were coded as inattentive, and 115 were speeding (e.g. above speed limit or driving too fast for conditions). Despite about 96 per cent of Ontario drivers using seat belts, 78 vehicle occupants who were fatally injured were not using seat belts at the time of the collision. FIGURE 2 Persons Involved in Fatal and Injury Collisions by Severity of Injury, 2022 None, 41.2% Minimal, 25.5% Minor , 29.6% Major, 2.7% Fatal, 1.0% 2. The People 18 Ontario Road Safety Annual Report 2022The People 2A People in Collisions TABLE 2.1: Category\n\nCombined use of seat belt with airbag deployment is unknown. TABLE 2.10: Seat Belt Usage by Severity of Passenger * Injury in Fatal and Personal Injury Collisions, 2022 * Includes hangers on and excludes passengers in parked vehicles. Safety Equipment Used Severity of Injury Fatal Major Minor Minimal Not Injured Total Seat Belt Used 43 168 3,303 3,138 5,895 12,547 Child Safety Seat Used Incorrectly 0 2 7 10 26 45 Child Safety Seat Used Correctly 0 8 132 206 743 1,089 Other Equipment ** 25 29 416 298 548 1,316 Equipment Not Used 24 33 140 44 20 261 No Safety Equipment 0 1 169 127 247 544 Use Unknown 16 11 138 133 173 471 Total 108 252 4,305 3,956 7,652 16,273 ** Other equipment includes use of airbags. Combined use of seat belt with airbag deployment is unknown. 26 Ontario Road Safety Annual\n\nactions such as hit-and-run, driving on the wrong side of the road, improper parking and illegally parked. 25 Ontario Road Safety Annual Report 2022The People The tables on the next two pages include only seat belt usage in collisions in which there were fatalities and personal injuries. Property-damage-only collisions are excluded. TABLE 2.9: Seat Belt Usage by Severity of Driver Injury in Fatal and Personal Injury Collisions, 2022 Safety Equipment Used Severity of Injury Total Fatal Major Minor Minimal Not Injured Seat Belt Used 152 469 9,734 8,941 16,512 35,808 Other Equipment * 45 83 967 798 1,159 3,052 Equipment Not Used 54 56 177 49 32 368 No Safety Equipment 2 5 13 5 25 50 Use Unknown 23 23 222 166 468 902 Total 276 636 11,113 9,959 18,196 40,180 * Other equipment includes use of airbags.\n\nwere wearing seat belts but, in 2020, 35% of fatally injured occupants were unbelted.4 DRIVERS AND PASSENGERS hAlways wear your seat belt hSit at least 25 cm (10 in) away from the air bag hAdjust head restraints so that the top is even with the top of your ears CHILDREN hSit infants and children under 13 in the back seat hUse approved child car seats/booster seats that have not expired. An approved child car seat in Canada will have a National Safety Mark hNever use child car seats/booster seats that have been recalled hReplace child car seats/booster seats that have been involved in collisions hInstall child car seats/booster seats properly hFasten child in the car seat/booster seat properly hNever leave a child in a hot vehicle as they could die in minutes: Dangers of Hot Cars and Children",
+    "retrieved_chunk_ids": [
+      "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0006",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0038",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0051",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0050",
+      "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0005"
+    ],
+    "baseline": {
+      "answer": "According to the Canadian safety booklet, correctly worn adult seat belts can reduce the chances of death in a collision by 47% and serious injury by 52%.",
+      "retrieved_chunk_ids": [
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0006",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0038",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0051",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0050",
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0005"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    },
+    "candidate": {
+      "answer": "According to the Canadian safety booklet, wearing seat belts correctly can reduce the chances of death in a collision by 47% and serious injury by 52%.",
+      "retrieved_chunk_ids": [
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0006",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0038",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0051",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0050",
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0005"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    }
+  },
+  {
+    "question_id": "transport-2025-source",
+    "reference_answer": "The source line identifies Transport Canada - Road Safety, NCDB, dated August 12, 2025.",
+    "retrieved_context": "Source: Transport Canada - Road Safety, NCDB - August 12, 2025 Source: Transport Canada - Road Safety, NCDB - August 12, 2025 Source: Transport Canada - Road Safety, NCDB - August 12, 2025 Source: Transport Canada - Road Safety, NCDB - August 12, 2025 Source: Transport Canada - Road Safety, NCDB - August 12, 2025 Source: Transport Canada - Road Safety, NCDB - August 12, 2025 Source: Transport Canada - Road Safety, NCDB - August 12, 2025 Source: Transport Canada - Road Safety, NCDB - August 12, 2025 Source: Transport Canada - Road Safety, NCDB - August 12, 2025 Source: Transport Canada - Road Safety, NCDB - August 12, 2025 Source: Transport Canada - Road Safety, NCDB - August 12, 2025\n\nROAD SAFETY IN CANADA Improving Your Safety © His Majesty the King in Right of Canada, as represented by the Minister of Transport, 2023. Cette publication est aussi disponible en français sous le titre Sécurité routière au Canada – Améliorer votre sécurité . PDF Cat. No. T46-65/2023E-PDF ISBN 978-0-660-47437-3Permission to reproduceTransport Canada grants permission to copy and/or reproduce the contents of this publication for personal and public non-commercial use. Users must reproduce the materials accurately, identify Transport Canada as the source and not present theirs as an official version, or as having been produced with the help or the endorsement of Transport Canada. To request permission to reproduce materials from this publication for commercial purposes, please complete the following\n\npermission of the Ministry of Transportation is required. ISSN #0832-8269 (Printed Version) ISSN #1710-2480 (Internet Version) Ministry of Transportation 87 Sir William Hearst Ave. Main Floor, Room 212 Toronto, Ontario M3M 0B4 Ministry of Transportation 87 Sir William Hearst Ave. Main Floor, Room 212 Toronto, Ontario M3M 0B4\n\nBoard. 2015. Access Management and Resource Roads: 2015 Update. FPB/SR/49. •3Lee, P.G., M. Hanneman, J.D. Gysbers, R. Cheng and W. Smith. 2010. Atlas of Canada’s Intact Forest Landscapes. Edmonton, Alberta: Global Forest Watch Canada 10th Anniversary Publication #1. 74 pp. •4British Columbia. Ministry of Environment. 2007. Environmental Trends in British Columbia: 2007. Min- istry of Environment, State of Environment Reporting. Data *By accessing these datasets, you agree to the licence associated with each ﬁle, as indicated in parentheses below. •Indicator Summary Data: Amount of Roaded & Roadless Area by Ecoregion in B.C. (Licence: Open Gov- ernment Licence - British Columbia ) •Digital Road Atlas (DRA) - Master Partially-AĴributed Roads (Licence: B.C. Crown Copyright ) •Ecoregions - Ecoregion\n\nOntario Road Safety Annual Report 2022 Ministry of Transportation iiOntario Road Safety Annual Report 2022 This document is available online at: ontario.ca/orsar. If you are seeking information on driving and r oad safety in Ontario, visit the Ministry of Transportation website at ontario.ca/transportation. The Official Ministry of Transportation (MTO) Driver’s Handbook is available online. You can also purchase copies at DriveTest centres, select ServiceOntario centres, online at Publications Ontario (ontario.ca/publications), or from a retail store near you. For more information on the data in this publica tion, please contact the Research and Evaluation Office Safety Program Development Branch at 416-235-3585. Produced by: Research and Evaluation Office Safety Program Development Branch",
+    "retrieved_chunk_ids": [
+      "Transport-Canada-Road-Safety-2025.pdf::chunk-0000",
+      "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0000",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0154",
+      "British-Columbia-Roads-Report-2018.pdf::chunk-0006",
+      "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0000"
+    ],
+    "baseline": {
+      "answer": "I don't have enough information in the uploaded document to answer that.",
+      "retrieved_chunk_ids": [
+        "Transport-Canada-Road-Safety-2025.pdf::chunk-0000",
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0000",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0154",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0006",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0000"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    },
+    "candidate": {
+      "answer": "The organization is Transport Canada, the database abbreviation is NCDB, and the date is August 12, 2025.",
+      "retrieved_chunk_ids": [
+        "Transport-Canada-Road-Safety-2025.pdf::chunk-0000",
+        "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf::chunk-0000",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0154",
+        "British-Columbia-Roads-Report-2018.pdf::chunk-0006",
+        "Ontario-Road-Safety-Annual-Report-2022.pdf::chunk-0000"
+      ],
+      "accuracy": "Unreviewed",
+      "grounding": "Unreviewed",
+      "reviewer": "",
+      "notes": ""
+    }
+  }
+]

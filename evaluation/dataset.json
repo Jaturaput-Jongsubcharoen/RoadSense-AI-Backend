@@ -1,0 +1,153 @@
+{
+  "version": 1,
+  "verification": "References checked against bundled PDF text using the production PyPDF2 parser on 2026-11-05. Page numbers are one-based PDF positions. No generated answers have been manually reviewed.",
+  "documents": {
+    "British-Columbia-Roads-Report-2018.pdf": {
+      "sha256": "f5dfd60e3764126d0f90b2a1f96e0113c657e1de620fe6b670b2c69e68171509",
+      "title": "Roads & Roadless Areas in British Columbia"
+    },
+    "Ontario-Road-Safety-Annual-Report-2022.pdf": {
+      "sha256": "38fc911cc12c4a9a59fcc0fd0b173169798f837f61209f6de519e79cf278c0cf",
+      "title": "Ontario Road Safety Annual Report 2022"
+    },
+    "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf": {
+      "sha256": "2c60e42c59ec3e722d4bef4ecaafc4012e5bae2185954da88a07b387c93122e2",
+      "title": "Road Safety in Canada: Improving Your Safety"
+    },
+    "Transport-Canada-Road-Safety-2025.pdf": {
+      "sha256": "489d6282113a1b43d5c362dc7d93311091f5a13b7508bebe6cfc8cff25eb17cd",
+      "title": "Transport Canada road-safety material (bundled filename)"
+    }
+  },
+  "questions": [
+    {
+      "id": "bc-road-length",
+      "question": "According to Roads & Roadless Areas in British Columbia, approximately how many kilometres of roads does B.C. have, and what road types are included?",
+      "expected_document_ids": ["British-Columbia-Roads-Report-2018.pdf"],
+      "expected_facts": [
+        {"text": "Approximately 719,000 kilometres", "accepted_phrases": ["719,000 kilometres", "719000 km"]},
+        {"text": "Includes all paved roads", "accepted_phrases": ["paved roads"]},
+        {"text": "Includes unpaved roads and trails allowing motorized vehicle use", "accepted_phrases": ["unpaved roads and trails"]},
+        {"text": "The included trails allow motorized vehicle use", "accepted_phrases": ["motorized vehicle use"]}
+      ],
+      "reference_answer": "B.C. has approximately 719,000 kilometres of roads, including all paved roads and unpaved roads and trails that allow motorized vehicle use.",
+      "sources": [{"document_id": "British-Columbia-Roads-Report-2018.pdf", "pdf_page": 1, "printed_page": "1", "section": "Opening indicators"}],
+      "reviewer_note": "Verified opening bullets on PDF page 1. Approximate total; do not treat trails without motorized access as included."
+    },
+    {
+      "id": "bc-unpaved-share",
+      "question": "In the British Columbia roads report, what percentage of roads are unpaved, and which surfaces are included in that category?",
+      "expected_document_ids": ["British-Columbia-Roads-Report-2018.pdf"],
+      "expected_facts": [
+        {"text": "92 percent unpaved", "accepted_phrases": ["92 percent", "92%"]},
+        {"text": "Seasonal roads included", "accepted_phrases": ["seasonal"]},
+        {"text": "Loose surfaced roads included", "accepted_phrases": ["loose"]},
+        {"text": "Rough surfaced roads included", "accepted_phrases": ["rough surfaced"]}
+      ],
+      "reference_answer": "Unpaved roads contribute 92 percent of total road length and include seasonal, loose and rough surfaced roads.",
+      "sources": [{"document_id": "British-Columbia-Roads-Report-2018.pdf", "pdf_page": 2, "printed_page": "2", "section": "Roads in B.C."}],
+      "reviewer_note": "Verified page 2 prose, not inferred from graph ordering. Percentage describes road length."
+    },
+    {
+      "id": "bc-roadless-definition",
+      "question": "How does the B.C. report define roadless land, and what percentage and area of the province's landbase is roadless?",
+      "expected_document_ids": ["British-Columbia-Roads-Report-2018.pdf"],
+      "expected_facts": [
+        {"text": "More than 500 metres from a road", "accepted_phrases": ["more than 500 metres from a road"]},
+        {"text": "66 percent", "accepted_phrases": ["66 percent", "Sixty-six percent", "66%"]},
+        {"text": "62,600,000 hectares", "accepted_phrases": ["62,600,000 hectares", "62600000 ha"]}
+      ],
+      "reference_answer": "Roadless land is more than 500 metres from a road. Sixty-six percent of B.C.'s landbase, or 62,600,000 hectares, is roadless.",
+      "sources": [{"document_id": "British-Columbia-Roads-Report-2018.pdf", "pdf_page": 3, "printed_page": "3", "section": "Roadless Areas in B.C."}],
+      "reviewer_note": "Verified page 3 bullet. Use strictly more than 500 metres; page 1 also describes the share as two thirds."
+    },
+    {
+      "id": "ontario-fatalities-change",
+      "question": "According to Ontario's 2022 road safety report, how many fatalities occurred in 2021 and 2022, and what percentage increase was reported?",
+      "expected_document_ids": ["Ontario-Road-Safety-Annual-Report-2022.pdf"],
+      "expected_facts": [
+        {"text": "561 fatalities in 2021", "accepted_phrases": ["561"]},
+        {"text": "623 fatalities in 2022", "accepted_phrases": ["623"]},
+        {"text": "11.1 percent increase", "accepted_phrases": ["11.1 per cent", "11.1 percent", "11.1%"]}
+      ],
+      "reference_answer": "Ontario recorded 561 fatalities in 2021 and 623 in 2022, an increase of 11.1 per cent.",
+      "sources": [{"document_id": "Ontario-Road-Safety-Annual-Report-2022.pdf", "pdf_page": 10, "printed_page": "4", "section": "Road Safety in Ontario: 2021 vs. 2022"}],
+      "reviewer_note": "Verified page 10 table columns and adjacent prose. Manual review must check year-to-count mapping; phrase coverage cannot."
+    },
+    {
+      "id": "ontario-fatality-rate",
+      "question": "What was Ontario's 2022 fatality rate per 10,000 licensed drivers?",
+      "expected_document_ids": ["Ontario-Road-Safety-Annual-Report-2022.pdf"],
+      "expected_facts": [
+        {"text": "0.56 fatalities", "accepted_phrases": ["0.56"]},
+        {"text": "Per 10,000 licensed drivers", "accepted_phrases": ["per 10,000 licensed drivers"]}
+      ],
+      "reference_answer": "The 2022 fatality rate was 0.56 fatalities per 10,000 licensed drivers.",
+      "sources": [{"document_id": "Ontario-Road-Safety-Annual-Report-2022.pdf", "pdf_page": 10, "printed_page": "4", "section": "Fatality Rate and 2021 vs. 2022 table"}],
+      "reviewer_note": "Verified 2022 table value and units. Do not confuse with the vehicle-distance-based international ranking on the same page."
+    },
+    {
+      "id": "ontario-inattentive-driving",
+      "question": "How many people were killed in Ontario collisions involving an inattentive driver in 2022, and what share of all fatalities involved inattentive driving?",
+      "expected_document_ids": ["Ontario-Road-Safety-Annual-Report-2022.pdf"],
+      "expected_facts": [
+        {"text": "92 people killed in 2022", "accepted_phrases": ["92"]},
+        {"text": "15 percent of all fatalities", "accepted_phrases": ["15 per cent", "15 percent", "15%"]}
+      ],
+      "reference_answer": "In 2022, 92 people were killed in collisions involving an inattentive driver; inattentive driving was a factor in 15 per cent of all fatalities on Ontario roads.",
+      "sources": [{"document_id": "Ontario-Road-Safety-Annual-Report-2022.pdf", "pdf_page": 10, "printed_page": "4", "section": "Inattentive Driving"}],
+      "reviewer_note": "Verified paragraph on page 10. This is involvement as a factor, not proof of sole causation."
+    },
+    {
+      "id": "canada-strategy-slogan",
+      "question": "What are the vision and slogan of Road Safety Strategy 2025 in Road Safety in Canada: Improving Your Safety?",
+      "expected_document_ids": ["ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf"],
+      "expected_facts": [
+        {"text": "Towards Zero", "accepted_phrases": ["Towards Zero"]},
+        {"text": "The safest roads in the world", "accepted_phrases": ["the safest roads in the world"]},
+        {"text": "Rethink Road Safety", "accepted_phrases": ["Rethink Road Safety"]}
+      ],
+      "reference_answer": "The vision is 'Towards Zero—The safest roads in the world' and the slogan is 'Rethink Road Safety'.",
+      "sources": [{"document_id": "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf", "pdf_page": 4, "printed_page": "2", "section": "The midpoint of Canada's Road Safety Strategy 2025"}],
+      "reviewer_note": "Verified page 4 prose. Strategy 2025 is discussed in this booklet; do not attribute it to unreadable charts in the separate 2025 filename."
+    },
+    {
+      "id": "canada-occupant-protection",
+      "question": "What minimum distance from the air bag and seating location for children under 13 does the Canadian safety booklet recommend?",
+      "expected_document_ids": ["ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf"],
+      "expected_facts": [
+        {"text": "At least 25 cm (10 in) away from the air bag", "accepted_phrases": ["at least 25 cm", "at least 10 in"]},
+        {"text": "Children under 13 in back seat", "accepted_phrases": ["under 13"]},
+        {"text": "Back seat", "accepted_phrases": ["back seat"]}
+      ],
+      "reference_answer": "Sit at least 25 cm (10 in) away from the air bag, and seat infants and children under 13 in the back seat.",
+      "sources": [{"document_id": "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf", "pdf_page": 6, "printed_page": "4", "section": "Occupant Protection"}],
+      "reviewer_note": "Verified drivers/passengers and children recommendations on page 6. Reference summarizes booklet guidance, not independently verified current law."
+    },
+    {
+      "id": "canada-seat-belt-benefits",
+      "question": "According to the Canadian safety booklet, by what percentages can correctly worn adult seat belts reduce the chances of death and serious injury in a collision?",
+      "expected_document_ids": ["ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf"],
+      "expected_facts": [
+        {"text": "Death reduction 47 percent", "accepted_phrases": ["47%", "47 percent", "47 per cent"]},
+        {"text": "Serious injury reduction 52 percent", "accepted_phrases": ["52%", "52 percent", "52 per cent"]}
+      ],
+      "reference_answer": "Correctly worn adult seat belts can reduce the chances of death in a collision by 47% and serious injury by 52%.",
+      "sources": [{"document_id": "ROAD-SAFETY-IN-CANADA_Improving-Your-Safety.pdf", "pdf_page": 7, "printed_page": "5", "section": "Did You Know? Adults"}],
+      "reviewer_note": "Verified page 7 adult figures (footnote 5), not the distinct child-restraint percentages. Manual review checks outcome-to-percentage mapping."
+    },
+    {
+      "id": "transport-2025-source",
+      "question": "What organization, database abbreviation and date are identified in the source line on the first page of the bundled Transport Canada 2025 PDF?",
+      "expected_document_ids": ["Transport-Canada-Road-Safety-2025.pdf"],
+      "expected_facts": [
+        {"text": "Transport Canada - Road Safety", "accepted_phrases": ["Transport Canada Road Safety"]},
+        {"text": "NCDB", "accepted_phrases": ["NCDB"]},
+        {"text": "August 12, 2025", "accepted_phrases": ["August 12, 2025", "12 August 2025"]}
+      ],
+      "reference_answer": "The source line identifies Transport Canada - Road Safety, NCDB, dated August 12, 2025.",
+      "sources": [{"document_id": "Transport-Canada-Road-Safety-2025.pdf", "pdf_page": 1, "printed_page": null, "section": "Source line"}],
+      "reviewer_note": "Verified literal extractable source line on page 1. No expansion of NCDB or numerical chart claims was inferred; the parser does not expose chart data."
+    }
+  ]
+}

@@ -1,103 +1,151 @@
-# import google.generativeai as genai
-# import os
-# from dotenv import load_dotenv
-
-# load_dotenv()
-
-# genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-
-# model = genai.GenerativeModel("models/gemini-1.5-flash")
-
-# # Chat with Gemini
-# # def chat_with_gemini(message: str):
-# #     try:
-# #         response = model.generate_content(message)
-# #         return response.text
-# #     except Exception as e:
-# #         return f"Gemini error: {str(e)}"
-# def chatbot_response(message):
-#     message = message.lower()
-
-#     if "pothole" in message:
-#         return "Potholes are caused by repeated traffic stress, water seepage, and temperature changes."
-
-#     if "road damage" in message:
-#         return "Common road damages include potholes, cracks, rutting, and surface wear."
-
-#     if "hello" in message or "hi" in message:
-#         return "Hello! How can I assist you with road safety today?"
-
-#     return "I’m not fully trained yet, but I can help with road-related issues!"
-
-
-# # Optional: Explain ML prediction using Gemini
-# def explain_prediction(class_name, confidence):
-#     prompt = f"""
-#     Explain the following road damage prediction in simple terms:
-#     - Predicted class: {class_name}
-#     - Confidence: {confidence*100:.2f}%
-#     """
-#     try:
-#         response = model.generate_content(prompt)
-#         return response.text
-#     except Exception as e:
-#         return f"Explanation error: {str(e)}"
-
-
-# def chatbot_response(message):
-#     msg = message.lower()
-
-#     if "pothole" in msg:
-#         return "Potholes form due to water seepage, freeze-thaw cycles, and repeated vehicle pressure."
-
-#     if "road damage" in msg:
-#         return "Road damage can include potholes, cracks, rutting, erosion, and surface wear."
-
-#     if "hello" in msg or "hi" in msg:
-#         return "Hello! Ask me anything about road conditions or safety."
-
-#     return "I’m a simple assistant! Ask me about potholes, road damages, or safety tips."
-
-
-# import requests
-
-# def chatbot_response(message):
-#     """
-#     Sends the user's message to a local Ollama LLM (llama3.1) 
-#     and returns the AI-generated response.
-#     """
-#     try:
-#         response = requests.post(
-#             "http://localhost:11434/api/generate",
-#             json={
-#                 "model": "llama3.1",
-#                 "prompt": message
-#             },
-#             timeout=30
-#         )
-
-#         data = response.json()
-#         return data.get("response", "No response from AI.")
-
-#     except Exception as e:
-#         return f"Error: {str(e)}"
-
+import json
+import logging
+import time
+import uuid
+from datetime import datetime, timezone
 
 import requests
-from services.llm_config import OLLAMA_MODEL, OLLAMA_URL, ollama_headers
+
+from services.llm_config import (
+    OLLAMA_COST_PER_1000_TOKENS,
+    OLLAMA_MAX_RETRIES,
+    OLLAMA_MODEL,
+    OLLAMA_RETRY_DELAY_SECONDS,
+    OLLAMA_URL,
+    ollama_headers,
+)
+
+logger = logging.getLogger(__name__)
+RETRYABLE_STATUS_CODES = {408, 429, 500, 502, 503, 504}
+UNAVAILABLE_MESSAGE = "Local AI service is unavailable. Start Ollama and try again."
+
+
+def estimate_tokens(text):
+    """Estimate tokens by counting whitespace-separated words."""
+    return len(text.split())
+
+
+def _token_count(value):
+    if isinstance(value, int) and not isinstance(value, bool) and value >= 0:
+        return value
+    return None
+
+
+def _log_request(request_id, started_at, prompt, status, attempts,
+                 response_data=None, error_category=None, http_status=None):
+    latency_ms = round((time.monotonic() - started_at) * 1000, 2)
+    prompt_tokens = _token_count(
+        response_data.get("prompt_eval_count") if response_data else None
+    )
+    completion_tokens = _token_count(
+        response_data.get("eval_count") if response_data else None
+    )
+    prompt_source = "provider" if prompt_tokens is not None else "estimate"
+    if prompt_tokens is None:
+        prompt_tokens = estimate_tokens(prompt)
+
+    answer = response_data.get("response") if response_data else None
+    completion_source = "provider" if completion_tokens is not None else "unavailable"
+    if completion_tokens is None and isinstance(answer, str):
+        completion_tokens = estimate_tokens(answer)
+        completion_source = "estimate"
+
+    total_tokens = None
+    if completion_tokens is not None:
+        total_tokens = prompt_tokens + completion_tokens
+
+    token_source = (
+        prompt_source if prompt_source == completion_source
+        else f"{prompt_source}+{completion_source}"
+    )
+    estimated_cost = None
+    if total_tokens is not None and OLLAMA_COST_PER_1000_TOKENS is not None:
+        estimated_cost = round(total_tokens * OLLAMA_COST_PER_1000_TOKENS / 1000, 8)
+
+    event = {
+        "request_id": request_id,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "model": OLLAMA_MODEL,
+        "status": status,
+        "attempts": attempts,
+        "latency_ms": latency_ms,
+        "prompt_tokens": prompt_tokens,
+        "completion_tokens": completion_tokens,
+        "total_tokens": total_tokens,
+        "token_source": token_source,
+        "cost_per_1000_tokens": OLLAMA_COST_PER_1000_TOKENS,
+        "estimated_provider_cost": estimated_cost,
+        "error_category": error_category,
+        "http_status": http_status,
+    }
+    message = json.dumps(event, separators=(",", ":"))
+    if status == "success":
+        logger.info("%s", message)
+    else:
+        logger.warning("%s", message)
+
+
+def request_ollama(prompt, timeout, options=None):
+    """Send a bounded request and record one privacy-safe JSON log event."""
+    request_id = uuid.uuid4().hex
+    started_at = time.monotonic()
+    retry_count = 0
+    error_category = None
+    http_status = None
+
+    while True:
+        http_status = None
+        try:
+            payload = {"model": OLLAMA_MODEL, "prompt": prompt, "stream": False}
+            if options is not None:
+                payload["options"] = options
+            response = requests.post(
+                OLLAMA_URL,
+                json=payload,
+                headers=ollama_headers(),
+                timeout=timeout,
+            )
+            http_status = response.status_code
+            response.raise_for_status()
+            data = response.json()
+            if not isinstance(data, dict):
+                raise ValueError("Ollama response must be a JSON object")
+            _log_request(
+                request_id, started_at, prompt, "success", retry_count + 1, data
+            )
+            return data
+        except requests.Timeout:
+            error_category = "timeout"
+            retryable = True
+        except requests.ConnectionError:
+            error_category = "connection_error"
+            retryable = True
+        except requests.HTTPError as error:
+            status_code = error.response.status_code if error.response is not None else None
+            http_status = status_code
+            error_category = "http_error"
+            retryable = status_code in RETRYABLE_STATUS_CODES
+        except ValueError:
+            error_category = "invalid_response"
+            retryable = False
+        except requests.RequestException:
+            error_category = "request_error"
+            retryable = False
+
+        if retryable and retry_count < OLLAMA_MAX_RETRIES:
+            retry_count += 1
+            time.sleep(OLLAMA_RETRY_DELAY_SECONDS)
+            continue
+
+        _log_request(
+            request_id, started_at, prompt, "failure", retry_count + 1,
+            error_category=error_category, http_status=http_status,
+        )
+        return None
+
 
 def chat_with_ollama(message):
-    payload = {
-        "model": OLLAMA_MODEL,
-        "prompt": message,
-        "stream": False
-    }
-
-    try:
-        res = requests.post(OLLAMA_URL, json=payload, headers=ollama_headers(), timeout=120)
-        res.raise_for_status()
-        data = res.json()
-        return data.get("response", "No response.")
-    except Exception as e:
-        print(f"Ollama request failed: {e}")
-        return "Local AI service is unavailable. Start Ollama and try again."
+    data = request_ollama(message, timeout=120)
+    if data is None:
+        return UNAVAILABLE_MESSAGE
+    return data.get("response", "No response.")

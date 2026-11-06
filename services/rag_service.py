@@ -121,6 +121,7 @@
 
 
 import json
+import logging
 import os
 from pathlib import Path
 from threading import Lock
@@ -131,14 +132,16 @@ os.environ["TRANSFORMERS_NO_TF"] = "1"      # block TF loading
 os.environ["TRANSFORMERS_NO_FLAX"] = "1"    # block JAX
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-import requests
 from werkzeug.utils import secure_filename
 
-from services.llm_config import OLLAMA_MODEL, OLLAMA_URL, ollama_headers
+from services.ollama_service import UNAVAILABLE_MESSAGE, request_ollama
+
+logger = logging.getLogger(__name__)
 
 # ---------------------- FILE STORAGE ------------------------
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "..", "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+ACTIVE_DOCUMENT_PATH = Path(UPLOAD_DIR) / ".active-document.json"
 ALLOWED_DOCUMENT_EXTENSIONS = {".pdf", ".txt", ".doc", ".docx"}
 
 # ---------------------- EMBEDDING MODEL ---------------------
@@ -147,6 +150,7 @@ embedder_lock = Lock()
 
 DOCS = []      # list[str] containing text chunks
 INDEX = None   # faiss index
+index_lock = Lock()
 
 
 def get_embedder():
@@ -198,6 +202,70 @@ def _chunk_text(text: str, chunk_size: int = 800) -> list:
     return chunks
 
 # ---------------------- LOAD DOCUMENT -----------------------
+def _build_index(chunks):
+    import faiss
+    import numpy as np
+
+    vectors = get_embedder().encode(chunks)
+    index = faiss.IndexFlatL2(vectors.shape[1])
+    index.add(np.array(vectors))
+    return index
+
+
+def _save_active_document(filename):
+    import tempfile
+
+    temporary_path = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            dir=ACTIVE_DOCUMENT_PATH.parent,
+            prefix=".active-document-",
+            suffix=".tmp",
+            delete=False,
+        ) as temporary_file:
+            temporary_path = Path(temporary_file.name)
+            json.dump({"filename": filename}, temporary_file)
+        os.replace(temporary_path, ACTIVE_DOCUMENT_PATH)
+    finally:
+        if temporary_path and temporary_path.exists():
+            temporary_path.unlink()
+
+
+def _restore_active_document():
+    global DOCS, INDEX
+
+    if INDEX is not None or DOCS or not ACTIVE_DOCUMENT_PATH.is_file():
+        return
+
+    with index_lock:
+        if INDEX is not None or DOCS or not ACTIVE_DOCUMENT_PATH.is_file():
+            return
+
+        marker = json.loads(ACTIVE_DOCUMENT_PATH.read_text(encoding="utf-8"))
+        filename = marker.get("filename") if isinstance(marker, dict) else None
+        if (
+            not isinstance(filename, str)
+            or secure_filename(filename) != filename
+            or Path(filename).suffix.lower() not in ALLOWED_DOCUMENT_EXTENSIONS
+        ):
+            raise ValueError("Persisted RAG document marker is invalid.")
+
+        document_path = Path(UPLOAD_DIR) / filename
+        if not document_path.is_file():
+            raise FileNotFoundError("Persisted RAG source document is missing.")
+
+        chunks = _chunk_text(_extract_text_from_file(str(document_path)))
+        if not chunks:
+            raise ValueError("Persisted RAG source document contains no readable text.")
+
+        index = _build_index(chunks)
+        DOCS = chunks
+        INDEX = index
+        logger.info("Restored persistent RAG index with %d chunks", len(chunks))
+
+
 def load_knowledge_from_file(file_storage) -> dict:
     """Save uploaded file, extract chunks, build FAISS index."""
     global DOCS, INDEX
@@ -219,22 +287,20 @@ def load_knowledge_from_file(file_storage) -> dict:
     if not chunks:
         DOCS = []
         INDEX = None
+        ACTIVE_DOCUMENT_PATH.unlink(missing_ok=True)
         return {"status": "error", "message": "No readable text found in file."}
 
+    index = _build_index(chunks)
+    _save_active_document(filename)
     DOCS = chunks
-    import faiss
-    import numpy as np
-
-    vectors = get_embedder().encode(DOCS)
-
-    INDEX = faiss.IndexFlatL2(vectors.shape[1])
-    INDEX.add(np.array(vectors))
+    INDEX = index
 
     return {"status": "ok", "chunks_loaded": len(DOCS)}
 
 # ---------------------- CONTEXT RETRIEVAL -------------------
 def _retrieve_context(query: str, top_k: int = 5) -> str:
     """Return top_k most relevant chunks."""
+    _restore_active_document()
     if INDEX is None or not DOCS:
         return "No context uploaded yet."
 
@@ -246,17 +312,14 @@ def _retrieve_context(query: str, top_k: int = 5) -> str:
     return "\n\n".join(selected)
 
 # ---------------------- MAIN RAG CHAT ------------------------
-def chat_with_ollama_rag(question: str) -> str:
-    """Use FAISS context + llama3.1 to answer user question."""
-    context = _retrieve_context(question)
-
-    # Smart instruction for summarization
+def build_rag_prompt(question: str, context: str) -> str:
+    """Build the existing production RAG prompt without changing its wording."""
     if "summarize" in question.lower() or "summary" in question.lower():
         style = "Summarize the content clearly in a concise way using ONLY the context below."
     else:
         style = "Answer concisely using ONLY the information in the context below."
 
-    prompt = f"""
+    return f"""
 You are a careful assistant. Follow instructions strictly.
 
 Instruction:
@@ -272,21 +335,16 @@ If the context does not contain enough information, reply exactly:
 "I don't have enough information in the uploaded document to answer that."
 """
 
-    payload = {
-        "model": OLLAMA_MODEL,
-        "prompt": prompt,
-        "stream": False,
-        "options": {"temperature": 0.1}
-    }
 
-    try:
-        res = requests.post(OLLAMA_URL, json=payload, headers=ollama_headers(), timeout=180)
-        res.raise_for_status()
-        data = res.json()
-        return data.get("response", "No response from AI.")
-    except Exception as e:
-        print(f"Ollama RAG request failed: {e}")
-        return "Local AI service is unavailable. Start Ollama and try again."
+def chat_with_ollama_rag(question: str) -> str:
+    """Use FAISS context + llama3.1 to answer user question."""
+    context = _retrieve_context(question)
+    prompt = build_rag_prompt(question, context)
+
+    data = request_ollama(prompt, timeout=180, options={"temperature": 0.1})
+    if data is None:
+        return UNAVAILABLE_MESSAGE
+    return data.get("response", "No response from AI.")
 
 
 def generate_suggested_questions() -> list[str]:
@@ -302,23 +360,18 @@ Return ONLY a valid JSON array of question strings. Do not include markdown or c
 DOCUMENT CONTEXT:
 {context}
 """
-    payload = {
-        "model": OLLAMA_MODEL,
-        "prompt": prompt,
-        "stream": False,
-        "options": {"temperature": 0.7},
-    }
+    data = request_ollama(prompt, timeout=120, options={"temperature": 0.7})
+    if data is None:
+        return []
 
     try:
-        response = requests.post(OLLAMA_URL, json=payload, headers=ollama_headers(), timeout=120)
-        response.raise_for_status()
-        raw = response.json().get("response", "")
+        raw = data.get("response", "")
         questions = json.loads(raw.strip().removeprefix("```json").removesuffix("```").strip())
         if isinstance(questions, list):
             cleaned_questions = [str(question).strip() for question in questions if str(question).strip()]
             if len(cleaned_questions) >= 5:
                 return cleaned_questions[:5]
-    except Exception as error:
-        print(f"Ollama question generation failed: {error}")
+    except (AttributeError, TypeError, ValueError):
+        logger.warning("Ollama suggested-questions response was not valid JSON")
 
     return []
