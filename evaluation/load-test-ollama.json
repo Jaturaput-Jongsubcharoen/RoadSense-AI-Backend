@@ -1,0 +1,49 @@
+{
+  "generated_at": "2026-11-05T23:32:31.485440+00:00",
+  "mode": "ollama",
+  "endpoint": "POST /api/chat (loopback only)",
+  "model": "llama3.1",
+  "concurrency": 1,
+  "requested_requests": 5,
+  "total_requests": 5,
+  "successful_requests": 5,
+  "failed_requests": 0,
+  "requests_per_second": 0.099,
+  "average_response_ms": 9962.4,
+  "p95_response_ms": 16828.0,
+  "error_rate": 0.0,
+  "elapsed_seconds": 50.3,
+  "duration_limit_seconds": 90,
+  "request_results": [
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 16828.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 7906.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 8344.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 9047.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 7687.0
+    }
+  ],
+  "limitations": [
+    "Mocked mode measures local Flask HTTP and routing overhead, not inference.",
+    "Ollama mode measures this machine and local model only.",
+    "Requests are sent only to a loopback server; production URLs are not used."
+  ]
+}

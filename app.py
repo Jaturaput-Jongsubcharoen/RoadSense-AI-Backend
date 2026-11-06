@@ -158,6 +158,7 @@
 
 import os
 import json
+import logging
 import random
 from pathlib import Path
 
@@ -167,6 +168,8 @@ from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 
 load_dotenv(Path(__file__).with_name(".env"))
+
+logging.basicConfig(level=logging.INFO)
 
 from services.ollama_service import chat_with_ollama
 
@@ -179,6 +182,14 @@ from services.rag_service import (
 )
 
 app = Flask(__name__)
+app.config["MAX_CONTENT_LENGTH"] = int(
+    os.getenv("MAX_CONTENT_LENGTH", str(32 * 1024 * 1024))
+)
+
+
+@app.errorhandler(413)
+def request_too_large(_error):
+    return jsonify({"error": "Request exceeds the configured upload limit"}), 413
 
 
 def _cors_origins():
@@ -400,7 +411,4 @@ if __name__ == "__main__":
         port=int(os.getenv("PORT", "5000")),
         debug=os.getenv("FLASK_DEBUG", "false").lower() == "true",
     )
-
-
-
 

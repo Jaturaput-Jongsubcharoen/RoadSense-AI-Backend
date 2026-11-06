@@ -1,0 +1,149 @@
+{
+  "generated_at": "2026-11-05T23:31:23.243230+00:00",
+  "mode": "mocked",
+  "endpoint": "POST /api/chat (loopback only)",
+  "model": null,
+  "concurrency": 5,
+  "requested_requests": 25,
+  "total_requests": 25,
+  "successful_requests": 25,
+  "failed_requests": 0,
+  "requests_per_second": 37.202,
+  "average_response_ms": 29.96,
+  "p95_response_ms": 47.0,
+  "error_rate": 0.0,
+  "elapsed_seconds": 0.67,
+  "duration_limit_seconds": 30,
+  "request_results": [
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 16.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 16.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 31.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 31.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 47.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 31.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 16.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 31.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 15.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 31.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 31.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 47.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 32.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 31.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 31.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 15.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 31.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 47.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 32.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 47.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 31.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 31.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 31.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 31.0
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 16.0
+    }
+  ],
+  "limitations": [
+    "Mocked mode measures local Flask HTTP and routing overhead, not inference.",
+    "Ollama mode measures this machine and local model only.",
+    "Requests are sent only to a loopback server; production URLs are not used."
+  ]
+}
